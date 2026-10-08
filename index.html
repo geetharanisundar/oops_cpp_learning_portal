@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>RVS-IT Learning Portal · CS25C07 OOP</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Learning Portal · CS25C07 OOP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   --mut: #64748b;
   --primary: #4f46e5;
   --primary-hover: #4338ca;
-  --primary-glow: rgba(79, 70, 229, 0.18);
+  --primary-glow: rgba(79, 70, 229, 0.2);
   --cyan-glow: #06b6d4;
   --ln: #e2e8f0;
   --code-bg: #090d16;
@@ -25,18 +25,19 @@
   --bad-bg: #fef2f2;
   --ok: #10b981;
   --ok-bg: #ecfdf5;
-  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  --card-shadow: 0 4px 18px -2px rgba(15, 23, 42, 0.05);
+  --popup-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(15, 23, 42, 0.08);
 }
 
 :root[data-theme="dark"] {
   --bg: #090d16;
   --surface: #111827;
-  --surface-raised: #1f293d;
+  --surface-raised: #1e293b;
   --ink: #f8fafc;
   --mut: #94a3b8;
   --primary: #6366f1;
   --primary-hover: #818cf8;
-  --primary-glow: rgba(99, 102, 241, 0.28);
+  --primary-glow: rgba(99, 102, 241, 0.3);
   --cyan-glow: #22d3ee;
   --ln: #243048;
   --code-bg: #05070c;
@@ -46,79 +47,140 @@
   --ok: #34d399;
   --ok-bg: rgba(16, 185, 129, 0.12);
   --card-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+  --popup-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font: 15px/1.6 "Plus Jakarta Sans", system-ui, sans-serif;
+  font: 15px/1.6 "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding-bottom: calc(85px + env(safe-area-inset-bottom));
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* Header & Mobile Sticky Nav */
 header {
-  padding: 22px 24px 16px;
+  padding: calc(14px + env(safe-area-inset-top)) 16px 12px;
   background: var(--surface);
   border-bottom: 1px solid var(--ln);
   position: sticky;
   top: 0;
   z-index: 40;
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 .header-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 1040px;
-  margin: 0 auto 12px;
+  margin: 0 auto 10px;
+  gap: 10px;
 }
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
 }
 .brand-badge {
   background: linear-gradient(135deg, var(--primary), var(--cyan-glow));
   color: #fff;
   font-weight: 700;
-  font-size: 0.82rem;
-  padding: 4px 10px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
   border-radius: 6px;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 10px var(--primary-glow);
+  box-shadow: 0 2px 8px var(--primary-glow);
+  flex-shrink: 0;
 }
-h1 { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.2px; }
-.header-sub { margin: 2px 0 0; color: var(--mut); font-size: 0.85rem; }
+.brand-text {
+  min-width: 0;
+}
+h1 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header-sub {
+  margin: 2px 0 0;
+  color: var(--mut);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .theme-btn {
   background: var(--surface-raised);
   border: 1px solid var(--ln);
   color: var(--ink);
-  padding: 6px 12px;
+  padding: 7px 12px;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  flex-shrink: 0;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
-.theme-btn:hover { border-color: var(--primary); color: var(--primary); }
+.theme-btn:active {
+  transform: scale(0.96);
+}
 
-.bar-box { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
-.bar { flex: 1; height: 7px; background: var(--surface-raised); border-radius: 4px; overflow: hidden; }
-.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--cyan-glow)); width: 0; transition: width 0.4s ease; }
-.prog-text { font-size: 0.78rem; font-weight: 600; color: var(--mut); white-space: nowrap; }
+.bar-box {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bar {
+  flex: 1;
+  height: 6px;
+  background: var(--surface-raised);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--cyan-glow));
+  width: 0;
+  transition: width 0.35s ease;
+}
+.prog-text {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--mut);
+  white-space: nowrap;
+}
 
 nav {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   overflow-x: auto;
-  padding: 12px 24px;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 16px;
   background: var(--surface);
   border-bottom: 1px solid var(--ln);
   max-width: 1040px;
   margin: 0 auto;
+  scrollbar-width: none;
 }
+nav::-webkit-scrollbar { display: none; }
 nav button {
   flex: none;
   border: 1px solid var(--ln);
@@ -127,107 +189,357 @@ nav button {
   padding: 8px 14px;
   border-radius: 8px;
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  min-height: 40px;
 }
-nav button:hover { color: var(--ink); border-color: var(--mut); }
+nav button:active { transform: scale(0.97); }
 nav button.on {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
-  box-shadow: 0 4px 12px var(--primary-glow);
+  box-shadow: 0 3px 10px var(--primary-glow);
 }
 
-main { max-width: 1040px; margin: 0 auto; padding: 24px 20px 60px; }
-.unit-head { margin-bottom: 20px; }
+/* Main Container */
+main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 16px 14px;
+}
+.unit-head { margin-bottom: 16px; }
 .unit-badge {
   display: inline-block;
   background: var(--primary-glow);
   color: var(--primary);
   font-weight: 700;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  padding: 3px 8px;
+  padding: 3px 7px;
   border-radius: 4px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
-h2 { margin: 0 0 6px; font-size: 1.45rem; font-weight: 700; }
-.syl { color: var(--mut); font-size: 0.92rem; margin: 0; line-height: 1.5; }
+h2 {
+  margin: 0 0 4px;
+  font-size: 1.28rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.syl {
+  color: var(--mut);
+  font-size: 0.86rem;
+  margin: 0;
+  line-height: 1.45;
+}
 
+/* Content Sections */
 section {
   background: var(--surface);
   border: 1px solid var(--ln);
   border-radius: 12px;
-  padding: 22px;
-  margin: 22px 0;
+  padding: 16px;
+  margin: 16px 0;
   box-shadow: var(--card-shadow);
 }
-h3 { margin: 0 0 14px; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-details { border-top: 1px solid var(--ln); padding: 12px 0; }
+details {
+  border-top: 1px solid var(--ln);
+  padding: 12px 0;
+}
 details:first-of-type { border-top: 0; padding-top: 0; }
 summary {
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: 0.94rem;
   user-select: none;
   display: flex;
   align-items: center;
   gap: 8px;
+  min-height: 40px;
 }
 summary::-webkit-details-marker { display: none; }
 summary::before {
   content: "›";
   display: inline-block;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   transition: transform 0.2s;
   color: var(--primary);
+  line-height: 1;
 }
 details[open] summary::before { transform: rotate(90deg); }
-details ul { margin: 10px 0 4px; padding-left: 24px; }
-details li { margin-bottom: 8px; line-height: 1.55; }
+details ul {
+  margin: 8px 0 4px;
+  padding-left: 20px;
+}
+details li {
+  margin-bottom: 8px;
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
 code {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.88em;
+  font-size: 0.86em;
   background: var(--surface-raised);
-  padding: 2px 6px;
+  padding: 2px 5px;
   border-radius: 4px;
   color: var(--primary);
+  word-break: break-word;
 }
 
-/* Chatbot Widget */
-.chat-container {
+/* In-Browser Compiler */
+textarea {
+  width: 100%;
+  min-height: 220px;
+  background: var(--code-bg);
+  color: var(--code-txt);
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  padding: 12px;
+  font: 13px/1.45 "JetBrains Mono", monospace;
+  tab-size: 4;
+  resize: vertical;
+}
+pre {
+  background: var(--code-bg);
+  color: var(--code-txt);
+  padding: 12px;
+  border-radius: 8px;
+  min-height: 70px;
+  margin: 10px 0 0;
+  overflow-x: auto;
+  font: 13px/1.45 "JetBrains Mono", monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+  border: 1px solid var(--ln);
+}
+.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+select, .btn {
+  font: inherit;
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--ln);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.86rem;
+  min-height: 44px;
+}
+select {
+  flex: 1 1 100%;
+}
+.btn {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  cursor: pointer;
+  flex: 1 1 auto;
+  text-align: center;
+}
+.btn:active { transform: scale(0.97); }
+.btn.g {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--ln);
+}
+.err { color: var(--bad); }
+
+/* Quiz MCQ Items */
+.q {
+  margin: 14px 0;
+  padding: 14px;
+  background: var(--bg);
+  border-radius: 10px;
+  border: 1px solid var(--ln);
+}
+.q b {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.q button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 6px 0;
+  padding: 11px 13px;
+  border: 1px solid var(--ln);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  min-height: 44px;
+  line-height: 1.35;
+}
+.q button:active { transform: scale(0.98); }
+.q button.r {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+  color: var(--ok);
+  font-weight: 600;
+}
+.q button.w {
+  border-color: var(--bad);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+.note { font-size: 0.8rem; color: var(--mut); margin-top: 6px; }
+
+/* ===================================================
+   MOBILE-FIRST POPUP AI TUTOR (FLOATING & BOTTOM SHEET)
+   =================================================== */
+.chat-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--cyan-glow));
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 10px 24px var(--primary-glow), 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+}
+.chat-fab:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 14px 30px var(--primary-glow), 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+.chat-fab svg { width: 28px; height: 28px; fill: currentColor; }
+.chat-fab-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 14px;
+  height: 14px;
+  background: var(--ok);
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+}
+
+/* Chat Popup (Desktop default, transforms on mobile) */
+.chat-popup {
+  position: fixed;
+  bottom: 86px;
+  right: 18px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  height: 520px;
+  max-height: calc(100vh - 120px);
+  background: var(--surface);
+  border: 1px solid var(--ln);
+  border-radius: 16px;
+  box-shadow: var(--popup-shadow);
   display: flex;
   flex-direction: column;
-  height: 420px;
-  border: 1px solid var(--ln);
-  border-radius: 10px;
-  background: var(--bg);
   overflow: hidden;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.96);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s;
 }
+.chat-popup.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.chat-header {
+  padding: 12px 14px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--ln);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.chat-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+.chat-header-sub {
+  font-size: 0.72rem;
+  color: var(--mut);
+  font-weight: 500;
+  display: block;
+}
+.chat-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ok);
+  display: inline-block;
+  box-shadow: 0 0 8px var(--ok);
+  flex-shrink: 0;
+}
+.chat-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--mut);
+  cursor: pointer;
+  padding: 8px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-close-btn:active {
+  background: var(--surface-raised);
+  color: var(--ink);
+}
+
 .chat-msgs {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+  background: var(--bg);
 }
 .chat-msg {
-  max-width: 82%;
-  padding: 10px 14px;
+  max-width: 88%;
+  padding: 9px 12px;
   border-radius: 10px;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  word-break: break-word;
 }
 .chat-msg.bot {
   align-self: flex-start;
   background: var(--surface);
   color: var(--ink);
   border: 1px solid var(--ln);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.02);
 }
 .chat-msg.bot ul { margin: 6px 0 0; padding-left: 18px; }
 .chat-msg.bot li { margin-bottom: 4px; }
@@ -237,126 +549,116 @@ code {
   color: #ffffff;
   border-bottom-right-radius: 2px;
 }
+
 .chat-chips {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   overflow-x: auto;
-  padding: 10px 14px;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 12px;
   background: var(--surface);
   border-top: 1px solid var(--ln);
+  scrollbar-width: none;
+  flex-shrink: 0;
 }
+.chat-chips::-webkit-scrollbar { display: none; }
 .chat-chip {
   flex: none;
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 500;
-  padding: 5px 12px;
-  border-radius: 20px;
+  padding: 6px 11px;
+  border-radius: 16px;
   background: var(--surface-raised);
   color: var(--ink);
   border: 1px solid var(--ln);
   cursor: pointer;
-  transition: all 0.2s;
+  min-height: 32px;
 }
-.chat-chip:hover {
+.chat-chip:active {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
 }
+
 .chat-bar {
   display: flex;
-  gap: 8px;
-  padding: 12px 14px;
+  gap: 6px;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
   background: var(--surface);
   border-top: 1px solid var(--ln);
+  flex-shrink: 0;
 }
 .chat-in {
   flex: 1;
-  padding: 10px 14px;
+  padding: 10px 12px;
   border: 1px solid var(--ln);
   border-radius: 8px;
   background: var(--bg);
   color: var(--ink);
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+  min-height: 44px;
 }
 .chat-in:focus { outline: 2px solid var(--primary); border-color: transparent; }
-
-/* Simulator */
-textarea {
-  width: 100%;
-  min-height: 270px;
-  background: var(--code-bg);
-  color: var(--code-txt);
-  border: 1px solid var(--ln);
+.chat-send-btn {
+  padding: 0 14px;
   border-radius: 8px;
-  padding: 14px;
-  font: 13.5px/1.5 "JetBrains Mono", monospace;
-  tab-size: 4;
-  resize: vertical;
-}
-pre {
-  background: var(--code-bg);
-  color: var(--code-txt);
-  padding: 14px;
-  border-radius: 8px;
-  min-height: 80px;
-  margin: 12px 0 0;
-  overflow-x: auto;
-  font: 13.5px/1.5 "JetBrains Mono", monospace;
-  white-space: pre-wrap;
-  border: 1px solid var(--ln);
-}
-.row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
-select, .btn {
-  font: inherit;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid var(--ln);
-  background: var(--surface);
-  color: var(--ink);
-  font-weight: 600;
-  font-size: 0.88rem;
-}
-.btn {
   background: var(--primary);
   color: #fff;
-  border-color: var(--primary);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.btn:hover { background: var(--primary-hover); }
-.btn.g { background: var(--surface-raised); color: var(--ink); border-color: var(--ln); }
-.btn.g:hover { border-color: var(--mut); }
-.err { color: var(--bad); }
-
-/* Quiz */
-.q {
-  margin: 16px 0;
-  padding: 16px;
-  background: var(--bg);
-  border-radius: 8px;
-  border: 1px solid var(--ln);
-}
-.q b { display: block; margin-bottom: 10px; font-size: 0.95rem; font-weight: 600; }
-.q button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  margin: 6px 0;
-  padding: 10px 14px;
-  border: 1px solid var(--ln);
-  background: var(--surface);
-  color: var(--ink);
-  border-radius: 8px;
-  font: inherit;
+  border: none;
+  font-weight: 600;
   font-size: 0.88rem;
   cursor: pointer;
-  transition: all 0.2s;
+  min-height: 44px;
 }
-.q button:hover { border-color: var(--primary); }
-.q button.r { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); font-weight: 600; }
-.q button.w { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
-.note { font-size: 0.82rem; color: var(--mut); }
+.chat-send-btn:active { transform: scale(0.96); }
+
+/* MOBILE RESPONSIVE MEDIA QUERIES */
+@media (max-width: 640px) {
+  header { padding-left: 12px; padding-right: 12px; }
+  main { padding: 12px 10px; }
+  section { padding: 14px; border-radius: 10px; margin: 12px 0; }
+  h1 { font-size: 0.98rem; }
+  .header-sub { display: none; }
+  
+  /* Full Bottom Sheet on Mobile */
+  .chat-popup {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100vw;
+    max-width: 100vw;
+    height: 80vh;
+    max-height: 85vh;
+    border-radius: 18px 18px 0 0;
+    transform: translateY(100%);
+    border-bottom: none;
+  }
+  .chat-popup.open {
+    transform: translateY(0);
+  }
+  .chat-header {
+    padding-top: 14px;
+    border-radius: 18px 18px 0 0;
+  }
+  .chat-header::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    background: var(--ln);
+    border-radius: 2px;
+  }
+  .chat-fab {
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 14px;
+    width: 56px;
+    height: 56px;
+  }
+}
 </style>
 </head>
 <body>
@@ -365,12 +667,12 @@ select, .btn {
   <div class="header-row">
     <div class="brand">
       <span class="brand-badge">RVS - IT</span>
-      <div>
+      <div class="brand-text">
         <h1>CS25C07 · Object Oriented Programming</h1>
         <p class="header-sub">Adaptive Learning Portal &amp; Interactive C++ Studio</p>
       </div>
     </div>
-    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌓 Toggle Theme</button>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle color theme">🌓 Theme</button>
   </div>
   <div class="bar-box">
     <div class="bar"><i id="pb"></i></div>
@@ -380,6 +682,38 @@ select, .btn {
 
 <nav id="nav"></nav>
 <main id="m"></main>
+
+<!-- TOUCH & MOBILE-FRIENDLY POPUP AI TUTOR FAB -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()" aria-label="Open AI Tutor" title="Open AI Tutor">
+  <span class="chat-fab-badge"></span>
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.1 21.2a1 1 0 0 0 1.2 1.2l4.2-.9A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+</button>
+
+<!-- BOTTOM SHEET / POPUP MODAL -->
+<div class="chat-popup" id="chatPopup" role="dialog" aria-labelledby="chatTitle">
+  <div class="chat-header">
+    <div class="chat-header-title">
+      <span class="chat-status-dot"></span>
+      <div>
+        <span id="chatTitle">AI Tutor</span>
+        <span class="chat-header-sub" id="chatUnitTag">Unit I Active</span>
+      </div>
+    </div>
+    <div class="chat-header-actions">
+      <button class="chat-close-btn" onclick="toggleChat()" aria-label="Close chat" title="Close chat (Esc)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="chat-msg bot">Hello! I am your <b> AI Tutor</b>. Ask me anything from the CS25C07 syllabus or tap a topic chip below!</div>
+  </div>
+  <div class="chat-chips" id="chatChips"></div>
+  <div class="chat-bar">
+    <input type="text" id="chatIn" class="chat-in" placeholder="Ask a syllabus question..." onkeydown="if(event.key==='Enter')askTutor(this.value)">
+    <button class="chat-send-btn" onclick="askTutor($('chatIn').value)">Send</button>
+  </div>
+</div>
 
 <script>
 const U=[
@@ -497,8 +831,7 @@ notes:[
  [
   "<b>Destructor:</b> Executes automatically when an object leaves scope or is explicitly deleted, releasing allocated memory and resources[cite: 34].",
   "<b>Characteristics:</b> Class name preceded by a tilde (<code>~Student()</code>); takes no arguments and has no return value[cite: 34].",
-  "<b>Restrictions:</b> Destructors cannot be overloaded and cannot be declared <code>static</code>[cite: 34]. They execute in exact reverse order of object construction.",
-  "<b>Deallocation:</b> Critical for reclaiming heap resources dynamically allocated by constructors."
+  "<b>Restrictions:</b> Destructors cannot be overloaded and cannot be declared <code>static</code>[cite: 34]. They execute in exact reverse order of object construction."
  ]
 ],
 ["4. Inline and Friend Functions",
@@ -520,7 +853,7 @@ notes:[
   "<b>Static Data Member:</b> Only a single copy is maintained in memory for the entire class, shared by every created object instance[cite: 40].",
   "<b>Initialization:</b> Automatically initialized to zero upon first object creation; must be defined globally outside the class: <code>int GfG::count = 0;</code>[cite: 40, 43].",
   "<b>Lifetime & Scope:</b> Scope is local to the class, but its lifetime spans the entire program execution[cite: 40].",
-  "<b>Static Member Functions:</b> Can only access static data members or other static member functions; invoked using class name: <code>ClassName::func()</code> without an object."
+  "<b>Static Member Functions:</b> Can only access static data members or other static member functions; invoked using class name: <code>ClassName::func()</code> without an object[cite: 44]."
  ]
 ]],
 quiz:[
@@ -1050,30 +1383,30 @@ function sim(src,ex){const e=compile(src);
  else o=run(src);
  return[h+o+"[exit code 0]",0]}
 
-/* ----  Chatbot Tutor Knowledge Engine ---- */
+/* ---- Lumina Chatbot Tutor Knowledge Engine ---- */
 const KB=[
  {kw:["pop","procedural","versus","difference","oop vs pop"],a:"<b>POP vs OOP:</b><br>&bull; <b>POP</b> divides programs into functions, uses a top-down approach, lacks data hiding, and data moves freely[cite: 4, 5].<br>&bull; <b>OOP</b> divides programs into objects, follows a bottom-up model, hides data behind access specifiers (private/public), and supports polymorphism and inheritance[cite: 4, 5]."},
  {kw:["encapsulation","abstraction","data hiding"],a:"<b>Encapsulation & Abstraction:</b><br>&bull; <b>Encapsulation</b> wraps data and functions into a single unit (class) to prevent direct outside modification (data hiding)[cite: 2].<br>&bull; <b>Data Abstraction</b> represents essential features while hiding internal background details[cite: 2]."},
  {kw:["structure of c++","c++ program structure","link section","main function","documentation"],a:"<b>Structure of a C++ Program:</b><br>&bull; <b>Documentation Section:</b> Descriptive comments (// or /* */)[cite: 3].<br>&bull; <b>Link Section:</b> Includes header files (<code>#include &lt;iostream&gt;</code>)[cite: 3].<br>&bull; <b>Definition Section:</b> Defines constants/macros (<code>#define PI 3.14</code>)[cite: 3].<br>&bull; <b>Global Declaration:</b> Declares global variables and prototypes[cite: 3].<br>&bull; <b>Class Declaration:</b> Defines class structures and members[cite: 3].<br>&bull; <b>main() Function:</b> Program execution entry point[cite: 3].<br>&bull; <b>User-Defined Functions:</b> Implements class methods outside class[cite: 4]."},
- {kw:["tokens","token","keyword","identifier","constant"],a:"<b>Tokens in C++:</b><br>&bull; The smallest individual units: Keywords, Identifiers, Constants, Strings, Operators[cite: 6].<br>&bull; <b>Keywords:</b> Reserved identifiers (break, class, if)[cite: 6].<br>&bull; <b>Identifiers:</b> User-defined variable/function names. Cannot start with a digit[cite: 6].<br>&bull; <b>Constants:</b> Fixed values that do not change during program execution[cite: 6]."},
- {kw:["pass by","parameter passing","pass by value","pass by reference","pass by address"],a:"<b>Parameter Passing Techniques:</b><br>&bull; <b>Pass by Value:</b> Copies the argument's value into formal parameters. Original values remain unchanged[cite: 25].<br>&bull; <b>Pass by Address:</b> Passes pointer addresses (<code>swap(&a, &b)</code>); uses dereferencing inside[cite: 26].<br>&bull; <b>Pass by Reference:</b> Passes alias to the original variable using reference operator (<code>void swap(int &a, int &b)</code>). Changes affect actual arguments directly[cite: 26, 27]."},
- {kw:["constructor","default constructor","copy constructor","parameterized constructor"],a:"<b>Constructors in C++:</b><br>&bull; A special member function with the exact same name as the class and no return type (not even void)[cite: 31].<br>&bull; <b>Default:</b> takes no arguments[cite: 31, 32].<br>&bull; <b>Parameterized:</b> takes initial arguments upon declaration[cite: 31].<br>&bull; <b>Copy:</b> initializes an object using another instance (<code>ClassName(const ClassName &o)</code>)[cite: 31]."},
- {kw:["destructor","~"],a:"<b>Destructors:</b><br>&bull; Automatically invoked when an object goes out of scope or is deleted[cite: 34].<br>&bull; Takes no parameters and cannot return values[cite: 34].<br>&bull; Preceded by tilde (<code>~ClassName()</code>) and cannot be overloaded[cite: 34]."},
- {kw:["inline","inline function"],a:"<b>Inline Functions:</b><br>&bull; Defined with <code>inline return_type func()</code>[cite: 35].<br>&bull; Requests the compiler to expand the function body in place of the call, avoiding function call overhead for compact routines[cite: 35]."},
- {kw:["friend function","friend"],a:"<b>Friend Function:</b><br>&bull; A non-member function granted access to a class's private/protected members[cite: 30].<br>&bull; Declared using keyword <code>friend</code> inside the class[cite: 30].<br>&bull; Invoked like a regular C++ function, not through an object (e.g. <code>show(obj);</code>, not <code>obj.show();</code>)[cite: 30]."},
+ {kw:["tokens","token","keyword","identifier","constant"],a:"<b>Tokens in C++:</b><br>&bull; Smallest individual program units: Keywords, Identifiers, Constants, Strings, Operators[cite: 6].<br>&bull; <b>Keywords:</b> Reserved identifiers (break, class, if)[cite: 6].<br>&bull; <b>Identifiers:</b> Names created by programmer. Cannot start with a digit[cite: 6].<br>&bull; <b>Constants:</b> Fixed values that do not change during program execution[cite: 6]."},
+ {kw:["pass by","parameter passing","pass by value","pass by reference","pass by address"],a:"<b>Parameter Passing:</b><br>&bull; <b>Pass by Value:</b> Copies data; changes inside don't alter original variables[cite: 25].<br>&bull; <b>Pass by Address:</b> Passes memory addresses (<code>swap(&a, &b)</code>)[cite: 26].<br>&bull; <b>Pass by Reference:</b> Uses aliases with <code>&</code> (<code>void swap(int &a, int &b)</code>); direct modification occurs[cite: 26, 27]."},
+ {kw:["constructor","default constructor","copy constructor","parameterized constructor"],a:"<b>Constructors in C++:</b><br>&bull; Special member function with identical class name and no return type[cite: 31].<br>&bull; <b>Default:</b> takes no arguments[cite: 31, 32].<br>&bull; <b>Parameterized:</b> initialized with arguments[cite: 31].<br>&bull; <b>Copy:</b> initializes an object using an existing object of the same class (<code>ClassName(const ClassName &o)</code>)[cite: 31]."},
+ {kw:["destructor","~"],a:"<b>Destructors:</b><br>&bull; Automatically invoked when an object goes out of scope or is deleted[cite: 34].<br>&bull; Preceded by tilde (<code>~ClassName()</code>); takes no parameters and has no return value[cite: 34].<br>&bull; Cannot be overloaded[cite: 34]."},
+ {kw:["inline","inline function"],a:"<b>Inline Functions:</b><br>&bull; Defined with <code>inline return_type func()</code>[cite: 35].<br>&bull; Replaces function call with the actual code body inline to reduce call overhead[cite: 35]."},
+ {kw:["friend function","friend"],a:"<b>Friend Function:</b><br>&bull; Non-member function granted access to private/protected members[cite: 30].<br>&bull; Declared with keyword <code>friend</code> inside the class[cite: 30].<br>&bull; Invoked like a normal function without object qualifier (e.g. <code>show(obj);</code>)[cite: 30]."},
  {kw:["static","static member","static function"],a:"<b>Static Members:</b><br>&bull; <b>Static Data Member:</b> Only one shared copy exists in memory for the entire class, initialized to 0[cite: 40].<br>&bull; <b>Static Function:</b> Can only access static data or static functions and is invoked via <code>ClassName::function()</code>[cite: 44]."},
  {kw:["inheritance","types of inheritance","multiple","multilevel","hierarchical","hybrid"],a:"<b>Inheritance Types:</b><br>1. <b>Single:</b> 1 Base &rarr; 1 Derived[cite: 45].<br>2. <b>Multilevel:</b> A &rarr; B &rarr; C[cite: 49].<br>3. <b>Multiple:</b> Several Base classes &rarr; 1 Derived class[cite: 46].<br>4. <b>Hierarchical:</b> 1 Base class &rarr; Several Derived classes[cite: 48].<br>5. <b>Hybrid:</b> Combination of multiple and multilevel (diamond)[cite: 51]."},
- {kw:["operator overloading","overloading operators","cannot overload"],a:"<b>Operator Overloading:</b><br>&bull; Gives special meaning to standard operators when used with classes: <code>ReturnType operator op(params)</code>[cite: 53].<br>&bull; <b>Operators that CANNOT be overloaded:</b> <code>sizeof</code>, <code>.</code> (dot), <code>.*</code> (pointer to member), <code>::</code> (scope resolution), and <code>?:</code> (ternary)[cite: 56]."},
- {kw:["pointer","pointer arithmetic","pointers"],a:"<b>Pointers & Pointer Arithmetic:</b><br>&bull; Variable storing address of another variable: <code>int *ptr = &a;</code>[cite: 59].<br>&bull; <code>ptr++</code> moves pointer by <code>sizeof(dataType)</code> bytes[cite: 60].<br>&bull; Subtracting two pointers of the same array yields the number of elements between them[cite: 62, 63]."},
- {kw:["this pointer","this"],a:"<b>The 'this' Pointer:</b><br>&bull; An implicit pointer available inside all non-static member functions pointing to the invoking instance[cite: 65].<br>&bull; Used to resolve variable shadowing (<code>this->x = x;</code>) and to return current object references for method chaining (<code>return *this;</code>)[cite: 65, 66]."},
- {kw:["virtual function","late binding","dynamic binding","runtime polymorphism"],a:"<b>Virtual Functions & Late Binding:</b><br>&bull; A member function in a base class declared with <code>virtual</code> and overridden in derived classes[cite: 71, 72].<br>&bull; Causes the compiler to postpone function binding to runtime (dynamic binding), invoking the derived class version via a base pointer[cite: 72]."},
- {kw:["abstract class","pure virtual"],a:"<b>Abstract Classes & Pure Virtual Functions:</b><br>&bull; A pure virtual function is defined with <code>= 0</code> (e.g., <code>virtual void draw() = 0;</code>)[cite: 73].<br>&bull; A class with at least one pure virtual function is an <b>Abstract Class</b> and cannot be instantiated directly[cite: 73, 74]."},
- {kw:["virtual destructor"],a:"<b>Virtual Destructor:</b><br>&bull; Defined in a base class as <code>virtual ~Base()</code>[cite: 75].<br>&bull; Ensures proper cleanup of derived class objects when deleted through a base class pointer[cite: 75]."},
- {kw:["virtual base class","diamond problem"],a:"<b>Virtual Base Class:</b><br>&bull; Prevents duplicate copies of an ancestor base class from being inherited in diamond/hybrid inheritance (e.g., <code>class B : virtual public A</code>)[cite: 76, 78].<br>&bull; Guarantees only one single shared instance of class A members exists in class D[cite: 78, 79]."},
- {kw:["template","function template","class template"],a:"<b>Templates in C++:</b><br>&bull; Supports generic programming: write code once for multiple data types[cite: 80].<br>&bull; <b>Function:</b> <code>template &lt;class T&gt; T add(T a, T b)</code>[cite: 80].<br>&bull; <b>Class:</b> <code>template &lt;class T&gt; class Stack { ... };</code>[cite: 81]."},
- {kw:["exception","try","catch","throw"],a:"<b>Exception Handling:</b><br>&bull; <b>try:</b> surrounds statements that might raise runtime errors[cite: 88].<br>&bull; <b>throw:</b> signals an exception object[cite: 88].<br>&bull; <b>catch:</b> handles the thrown error (e.g. <code>catch(int err)</code> or catch-all <code>catch(...)</code>)[cite: 88, 89]."},
- {kw:["cerr","clog","cout","cin","stream","streams"],a:"<b>C++ Stream Objects:</b><br>&bull; <code>cout</code>: Standard buffered output stream[cite: 86].<br>&bull; <code>cin</code>: Standard extraction input stream[cite: 86].<br>&bull; <code>cerr</code>: Unbuffered standard error stream (displays immediately)[cite: 87].<br>&bull; <code>clog</code>: Buffered error logging stream[cite: 92]."},
- {kw:["file modes","ios::","ios::app","ios::trunc","ios::binary","fstream"],a:"<b>File Modes in &lt;fstream&gt;:</b><br>&bull; <code>ios::in</code>: Read mode[cite: 98].<br>&bull; <code>ios::out</code>: Write mode[cite: 98].<br>&bull; <code>ios::app</code>: Append to end[cite: 99].<br>&bull; <code>ios::trunc</code>: Discard existing contents[cite: 99].<br>&bull; <code>ios::binary</code>: Raw binary mode[cite: 98]."}
+ {kw:["operator overloading","overloading operators","cannot overload"],a:"<b>Operator Overloading:</b><br>&bull; Extends operators for user-defined classes: <code>ReturnType operator op(params)</code>[cite: 53].<br>&bull; <b>Operators that CANNOT be overloaded:</b> <code>sizeof</code>, <code>.</code> (dot), <code>.*</code> (pointer to member), <code>::</code> (scope resolution), and <code>?:</code> (ternary)[cite: 56]."},
+ {kw:["pointer","pointer arithmetic","pointers"],a:"<b>Pointers & Pointer Arithmetic:</b><br>&bull; Stores memory address of another variable: <code>int *ptr = &a;</code>[cite: 59].<br>&bull; <code>ptr++</code> advances address by <code>sizeof(dataType)</code> bytes[cite: 60].<br>&bull; Difference of two pointers of the same array yields the number of elements between them[cite: 62, 63]."},
+ {kw:["this pointer","this"],a:"<b>The 'this' Pointer:</b><br>&bull; Implicit pointer available in non-static member functions pointing to the calling object[cite: 65].<br>&bull; Resolves shadowing (<code>this->x = x;</code>) and enables method chaining (<code>return *this;</code>)[cite: 65, 66]."},
+ {kw:["virtual function","late binding","dynamic binding","runtime polymorphism"],a:"<b>Virtual Functions & Late Binding:</b><br>&bull; Base class function declared with <code>virtual</code> and overridden by derived classes[cite: 71, 72].<br>&bull; Binding postponed to runtime, allowing base pointer to execute derived implementation[cite: 72]."},
+ {kw:["abstract class","pure virtual"],a:"<b>Abstract Classes & Pure Virtual Functions:</b><br>&bull; Pure virtual function is declared with <code>= 0</code> without a body in base class[cite: 73].<br>&bull; A class with at least one pure virtual function is an <b>Abstract Class</b> and cannot be instantiated[cite: 73, 74]."},
+ {kw:["virtual destructor"],a:"<b>Virtual Destructor:</b><br>&bull; Declared in base classes with <code>virtual ~Base()</code>[cite: 75].<br>&bull; Guarantees proper cleanup of derived objects when deleted via base class pointer[cite: 75]."},
+ {kw:["virtual base class","diamond problem"],a:"<b>Virtual Base Class:</b><br>&bull; Solves diamond problem in hybrid inheritance (<code>class B : virtual public A</code>)[cite: 76, 78].<br>&bull; Ensures only one shared copy of base class members is inherited by the grandchild class[cite: 78, 79]."},
+ {kw:["template","function template","class template"],a:"<b>Templates in C++:</b><br>&bull; Enables generic programming across multiple data types[cite: 80].<br>&bull; <b>Function Template:</b> <code>template &lt;class T&gt; T add(T a, T b)</code>[cite: 80].<br>&bull; <b>Class Template:</b> <code>template &lt;class T&gt; class Stack { ... };</code>[cite: 81]."},
+ {kw:["exception","try","catch","throw"],a:"<b>Exception Handling:</b><br>&bull; <b>try:</b> encloses code that may throw runtime errors[cite: 88].<br>&bull; <b>throw:</b> raises an error object[cite: 88].<br>&bull; <b>catch:</b> handles the thrown error: <code>catch(int err)</code> or catch-all <code>catch(...)</code>[cite: 88, 89]."},
+ {kw:["cerr","clog","cout","cin","stream","streams"],a:"<b>C++ Stream Objects:</b><br>&bull; <code>cout</code>: Standard buffered output[cite: 86].<br>&bull; <code>cin</code>: Standard keyboard input[cite: 86].<br>&bull; <code>cerr</code>: Unbuffered immediate error output[cite: 87].<br>&bull; <code>clog</code>: Buffered error logging[cite: 92]."},
+ {kw:["file modes","ios::","ios::app","ios::trunc","ios::binary","fstream"],a:"<b>File Modes in &lt;fstream&gt;:</b><br>&bull; <code>ios::in</code>: Read mode[cite: 98].<br>&bull; <code>ios::out</code>: Write mode[cite: 98].<br>&bull; <code>ios::app</code>: Append to end[cite: 99].<br>&bull; <code>ios::trunc</code>: Discard prior content[cite: 99].<br>&bull; <code>ios::binary</code>: Binary mode[cite: 98]."}
 ];
 
 function getBotReply(q, uIdx){
@@ -1126,7 +1459,58 @@ function askChip(noteIdx){
  }, 150);
 }
 
-/* ---- Theme Management ---- */
+function toggleChat(){
+ const pop = $("chatPopup");
+ const isOpen = pop.classList.contains("open");
+ if(isOpen) {
+   pop.classList.remove("open");
+ } else {
+   pop.classList.add("open");
+   setTimeout(()=> $("chatIn").focus(), 150);
+ }
+}
+
+function updateChatChips(){
+ const chipsBox = $("chatChips");
+ if(!chipsBox) return;
+ chipsBox.innerHTML = U[cur].notes.map((n, k) => `<button class="chat-chip" onclick="askChip(${k})">${n[0]}</button>`).join("");
+ const tag = $("chatUnitTag");
+ if(tag) tag.textContent = `${U[cur].n} Active`;
+}
+
+document.addEventListener("keydown", (e)=>{
+ if(e.key === "Escape" && $("chatPopup").classList.contains("open")){
+   toggleChat();
+ }
+});
+
+/* Ripple Effect on FAB */
+const fab = document.getElementById("chatFab");
+if (fab) {
+  fab.addEventListener("pointerdown", function (e) {
+    const rect = fab.getBoundingClientRect();
+    const ripple = document.createElement("span");
+    const size = Math.max(rect.width, rect.height) * 1.4;
+    ripple.style.position = "absolute";
+    ripple.style.borderRadius = "50%";
+    ripple.style.transform = "scale(0)";
+    ripple.style.background = "rgba(255, 255, 255, 0.4)";
+    ripple.style.pointerEvents = "none";
+    ripple.style.width = ripple.style.height = `${size}px`;
+    ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+    ripple.style.transition = "transform 0.4s ease-out, opacity 0.4s ease-out";
+    fab.appendChild(ripple);
+
+    requestAnimationFrame(() => {
+      ripple.style.transform = "scale(1)";
+      ripple.style.opacity = "0";
+    });
+    setTimeout(() => ripple.remove(), 450);
+  });
+}
+
+/* Theme Management */
 function initTheme(){
  const saved = localStorage.getItem("lumina_theme");
  if(saved) document.documentElement.setAttribute("data-theme", saved);
@@ -1139,7 +1523,7 @@ function toggleTheme(){
 }
 initTheme();
 
-/* ---- UI ---- */
+/* UI State & Render */
 let cur=0;const done=(()=>{try{return JSON.parse(localStorage.getItem("oopdone")||"[]")}catch(e){return[]}})();
 const save=()=>{try{localStorage.setItem("oopdone",JSON.stringify(done))}catch(e){}};
 const $=id=>document.getElementById(id);
@@ -1148,28 +1532,13 @@ function show(i){cur=i;const u=U[i];
  $("nav").innerHTML=U.map((x,k)=>`<button class="${k==i?"on":""}" onclick="show(${k})">${x.n}${done.includes(k)?" ✓":""}</button>`).join("");
  $("m").innerHTML=`<div class="unit-head"><span class="unit-badge">Module Active</span><h2>${u.n}: ${u.t}</h2><p class="syl">${u.s}</p></div>
  <section><h3>📘 Syllabus &amp; Concept Notes</h3>${u.notes.map((n,k)=>`<details ${k==0?"open":""}><summary>${n[0]}</summary><ul>${n[1].map(l=>"<li>"+l+"</li>").join("")}</ul></details>`).join("")}</section>
- <section><h3>✨ AI Syllabus Tutor</h3>
-  <p class="note">Ask any conceptual questions, syntax queries, or exam-focused doubts from ${u.n}.</p>
-  <div class="chat-container">
-    <div class="chat-msgs" id="chatMsgs">
-      <div class="chat-msg bot">Greetings! I am your <b>AI Tutor</b> for <b>${u.n} (${u.t})</b>. Ask me anything or select a topic chip below to start!</div>
-    </div>
-    <div class="chat-chips" id="chatChips">
-      ${u.notes.map((n,k)=>`<button class="chat-chip" onclick="askChip(${k})">${n[0]}</button>`).join("")}
-    </div>
-    <div class="chat-bar">
-      <input type="text" id="chatIn" class="chat-in" placeholder="Ask a question about ${u.n}..." onkeydown="if(event.key==='Enter')askTutor(this.value)">
-      <button class="btn" onclick="askTutor($('chatIn').value)">Ask</button>
-    </div>
-  </div>
- </section>
  <section><h3>⚡ g++ Compiler Studio</h3><div class="row"><select id="sel" onchange="load(this.value)">${u.ex.map((x,k)=>`<option value="${k}">${x[0]}</option>`).join("")}</select>
  <button class="btn" onclick="go()">Compile and run</button><button class="btn g" onclick="load($('sel').value)">Reset</button></div>
  <textarea id="src" spellcheck="false"></textarea><pre id="out">Press "Compile and run".</pre>
  <p class="note">Browser simulation: verifies g++ syntax, scope declarations, unbalanced braces, and header inclusions while executing core statements.</p></section>
  <section><h3>📝 Unit Evaluation (10 MCQs)</h3>${u.quiz.map((q,a)=>`<div class="q"><b>${q[0]}</b>${q[1].map((o,b)=>`<button onclick="ans(this,${q[2]==b})">${String.fromCharCode(65+b)}) ${o}</button>`).join("")}</div>`).join("")}</section>
  <button class="btn" onclick="fin()">${done.includes(i)?"Completed ✓":"Mark unit complete"}</button>`;
- load(0);prog();window.scrollTo(0,0)}
+ load(0);prog();updateChatChips();window.scrollTo(0,0)}
 function load(k){$("src").value=U[cur].ex[k][1]}
 function go(){const[r,bad]=sim($("src").value,U[cur].ex.map(x=>x));$("out").innerHTML="";$("out").textContent=r;$("out").className=bad?"err":""}
 function ans(b,ok){[...b.parentNode.querySelectorAll("button")].forEach(x=>x.className="");b.className=ok?"r":"w"}
