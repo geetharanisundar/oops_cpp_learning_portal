@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RVS-IT Learning Portal · CS25C07 OOP</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface-raised: #f1f5f9;
+  --ink: #0f172a;
+  --mut: #64748b;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-glow: rgba(79, 70, 229, 0.18);
+  --cyan-glow: #06b6d4;
+  --ln: #e2e8f0;
+  --code-bg: #090d16;
+  --code-txt: #e2e8f0;
+  --bad: #ef4444;
+  --bad-bg: #fef2f2;
+  --ok: #10b981;
+  --ok-bg: #ecfdf5;
+  --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+}
+
+:root[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #111827;
+  --surface-raised: #1f293d;
+  --ink: #f8fafc;
+  --mut: #94a3b8;
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --primary-glow: rgba(99, 102, 241, 0.28);
+  --cyan-glow: #22d3ee;
+  --ln: #243048;
+  --code-bg: #05070c;
+  --code-txt: #cbd5e1;
+  --bad: #f87171;
+  --bad-bg: rgba(239, 68, 68, 0.12);
+  --ok: #34d399;
+  --ok-bg: rgba(16, 185, 129, 0.12);
+  --card-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.4);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.6 "Plus Jakarta Sans", system-ui, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+header {
+  padding: 22px 24px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--ln);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1040px;
+  margin: 0 auto 12px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-badge {
+  background: linear-gradient(135deg, var(--primary), var(--cyan-glow));
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px var(--primary-glow);
+}
+h1 { margin: 0; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.2px; }
+.header-sub { margin: 2px 0 0; color: var(--mut); font-size: 0.85rem; }
+
+.theme-btn {
+  background: var(--surface-raised);
+  border: 1px solid var(--ln);
+  color: var(--ink);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.theme-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+.bar-box { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+.bar { flex: 1; height: 7px; background: var(--surface-raised); border-radius: 4px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--cyan-glow)); width: 0; transition: width 0.4s ease; }
+.prog-text { font-size: 0.78rem; font-weight: 600; color: var(--mut); white-space: nowrap; }
+
+nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--ln);
+  max-width: 1040px;
+  margin: 0 auto;
+}
+nav button {
+  flex: none;
+  border: 1px solid var(--ln);
+  background: var(--surface);
+  color: var(--mut);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+nav button:hover { color: var(--ink); border-color: var(--mut); }
+nav button.on {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+main { max-width: 1040px; margin: 0 auto; padding: 24px 20px 60px; }
+.unit-head { margin-bottom: 20px; }
+.unit-badge {
+  display: inline-block;
+  background: var(--primary-glow);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+h2 { margin: 0 0 6px; font-size: 1.45rem; font-weight: 700; }
+.syl { color: var(--mut); font-size: 0.92rem; margin: 0; line-height: 1.5; }
+
+section {
+  background: var(--surface);
+  border: 1px solid var(--ln);
+  border-radius: 12px;
+  padding: 22px;
+  margin: 22px 0;
+  box-shadow: var(--card-shadow);
+}
+h3 { margin: 0 0 14px; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+
+details { border-top: 1px solid var(--ln); padding: 12px 0; }
+details:first-of-type { border-top: 0; padding-top: 0; }
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.98rem;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+summary::-webkit-details-marker { display: none; }
+summary::before {
+  content: "›";
+  display: inline-block;
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+  color: var(--primary);
+}
+details[open] summary::before { transform: rotate(90deg); }
+details ul { margin: 10px 0 4px; padding-left: 24px; }
+details li { margin-bottom: 8px; line-height: 1.55; }
+code {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.88em;
+  background: var(--surface-raised);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--primary);
+}
+
+/* Chatbot Widget */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+  border: 1px solid var(--ln);
+  border-radius: 10px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.chat-msgs {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.chat-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.chat-msg.bot {
+  align-self: flex-start;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--ln);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+.chat-msg.bot ul { margin: 6px 0 0; padding-left: 18px; }
+.chat-msg.bot li { margin-bottom: 4px; }
+.chat-msg.user {
+  align-self: flex-end;
+  background: var(--primary);
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+.chat-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-top: 1px solid var(--ln);
+}
+.chat-chip {
+  flex: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--ln);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chat-chip:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.chat-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border-top: 1px solid var(--ln);
+}
+.chat-in {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+.chat-in:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+/* Simulator */
+textarea {
+  width: 100%;
+  min-height: 270px;
+  background: var(--code-bg);
+  color: var(--code-txt);
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  padding: 14px;
+  font: 13.5px/1.5 "JetBrains Mono", monospace;
+  tab-size: 4;
+  resize: vertical;
+}
+pre {
+  background: var(--code-bg);
+  color: var(--code-txt);
+  padding: 14px;
+  border-radius: 8px;
+  min-height: 80px;
+  margin: 12px 0 0;
+  overflow-x: auto;
+  font: 13.5px/1.5 "JetBrains Mono", monospace;
+  white-space: pre-wrap;
+  border: 1px solid var(--ln);
+}
+.row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+select, .btn {
+  font: inherit;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--ln);
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+.btn {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover { background: var(--primary-hover); }
+.btn.g { background: var(--surface-raised); color: var(--ink); border-color: var(--ln); }
+.btn.g:hover { border-color: var(--mut); }
+.err { color: var(--bad); }
+
+/* Quiz */
+.q {
+  margin: 16px 0;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--ln);
+}
+.q b { display: block; margin-bottom: 10px; font-size: 0.95rem; font-weight: 600; }
+.q button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 6px 0;
+  padding: 10px 14px;
+  border: 1px solid var(--ln);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.q button:hover { border-color: var(--primary); }
+.q button.r { border-color: var(--ok); background: var(--ok-bg); color: var(--ok); font-weight: 600; }
+.q button.w { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
+.note { font-size: 0.82rem; color: var(--mut); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <div class="brand">
+      <span class="brand-badge">RVS - IT</span>
+      <div>
+        <h1>CS25C07 · Object Oriented Programming</h1>
+        <p class="header-sub">Adaptive Learning Portal &amp; Interactive C++ Studio</p>
+      </div>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌓 Toggle Theme</button>
+  </div>
+  <div class="bar-box">
+    <div class="bar"><i id="pb"></i></div>
+    <div class="prog-text" id="pt">0 of 6 units complete</div>
+  </div>
+</header>
+
+<nav id="nav"></nav>
+<main id="m"></main>
+
+<script>
+const U=[
+{n:"Unit I",t:"Principles of Object-Oriented Programming",s:"Characteristics of OO languages, C++ program structure, POP vs OOP, tokens, variables, data types, type conversion, operators, expressions, namespace, control statements, parameter passing.",
+notes:[
+["1. Introduction & Characteristics of OOP",
+ [
+  "<b>Introduction:</b> Developed by Bjarne Stroustrup at AT&T Bell Laboratories as a proper superset and extension of C (C++ compiler can compile C code, but reverse is not possible)[cite: 1].",
+  "<b>Objects:</b> Contain data and code to manipulate data[cite: 1]. Objects represent runtime entities of a class (a variable of type class)[cite: 1].",
+  "<b>Classes:</b> User-defined data types containing member data and member functions[cite: 1]. Acts as a blueprint/collection of objects of similar type (e.g. <code>Fruit Mango;</code>)[cite: 1].",
+  "<b>Encapsulation & Data Abstraction:</b> Wrapping data and functions into a single unit (class)[cite: 2]. Prevents outside access; insulation of data is known as <i>data hiding</i>[cite: 2]. Abstraction represents essential features without background details (Abstract Data Type - ADT)[cite: 2].",
+  "<b>Inheritance:</b> Process by which objects of one class acquire properties of another, promoting reusability without modifying the base class[cite: 2].",
+  "<b>Polymorphism:</b> Ability to take more than one form via operator overloading (e.g., <code>+</code> for numeric addition or string concatenation) and function overloading[cite: 2].",
+  "<b>Dynamic Binding (Late Binding):</b> Linking a procedure call to the executable code at run-time rather than compile-time[cite: 2].",
+  "<b>Message Passing:</b> Objects communicate by sending and receiving data, specifying target object, function name (message), and parameters[cite: 2, 3].",
+  "<b>OOP Applications:</b> Real-time systems, simulation and modeling, object-oriented databases, AI/expert systems, neural networks, CAD/CAM/CIM[cite: 3]."
+ ]
+],
+["2. POP vs Object Oriented Programming (OOP)",
+ [
+  "<b>Division:</b> POP divides program into functions; OOP divides program into objects[cite: 4].",
+  "<b>Approach:</b> POP follows a top-down approach; OOP follows a bottom-up approach[cite: 5].",
+  "<b>Access Control & Security:</b> POP has no access specifiers and poor data hiding; OOP provides <code>private</code>, <code>protected</code>, <code>public</code> specifiers with high security[cite: 5].",
+  "<b>Overloading & Extensibility:</b> Overloading is impossible in POP, while operator and function overloading are core in OOP[cite: 5]. Adding new data/functions is difficult in POP, but easy in OOP[cite: 5].",
+  "<b>Focus & Abstraction:</b> POP prioritizes functions over data and uses procedural abstraction; OOP prioritizes data and uses data abstraction[cite: 5].",
+  "<b>Reusability:</b> Absent in POP; achieved via inheritance in OOP[cite: 6]. Examples: C, FORTRAN, Pascal (POP) vs C++, Java, Python, C# (OOP)[cite: 6]."
+ ]
+],
+["3. C++ Program Structure & Compilation Sections",
+ [
+  "<b>1. Documentation Section:</b> Comments describing author and purpose (e.g., <code>// Program...</code>)[cite: 3].",
+  "<b>2. Link Section:</b> Preprocessor directives to include header files (e.g., <code>#include &lt;iostream&gt;</code>)[cite: 3].",
+  "<b>3. Definition Section:</b> Macro and constant definitions (e.g., <code>#define PI 3.14</code>)[cite: 3].",
+  "<b>4. Global Declaration Section:</b> Global variables, function prototypes, and global declarations[cite: 3].",
+  "<b>5. Class Declaration Section:</b> Declaration of classes, data members, and methods[cite: 3].",
+  "<b>6. Main Function Section:</b> Execution begins in <code>int main()</code>; creates objects and calls methods[cite: 3].",
+  "<b>7. User-Defined Functions:</b> Out-of-line class method implementations using scope resolution <code>ClassName::func()</code>[cite: 4]."
+ ]
+],
+["4. Tokens, Data Types, Variables & Constants",
+ [
+  "<b>Tokens:</b> Smallest individual units in a program: Keywords, Identifiers, Constants, Strings, Operators[cite: 6].",
+  "<b>Keywords:</b> Reserved identifiers that cannot be used as variable names (e.g., <code>break</code>, <code>case</code>)[cite: 6].",
+  "<b>Identifiers:</b> Names of variables, functions, and classes; letters, digits, and underscores allowed; cannot start with a digit; case-sensitive; no length limit[cite: 6].",
+  "<b>Data Types:</b> Built-in (<code>int</code>, <code>char</code>, <code>float</code>, <code>double</code>, <code>void</code>), User-defined (<code>struct</code>, <code>union</code>, <code>class</code>, <code>enum</code>), Derived (arrays, functions, pointers, references)[cite: 7].",
+  "<b>Character Arrays:</b> In C++, string character arrays must be sized one character larger than length for the null terminator <code>'\\0'</code> (e.g., <code>char str[4] = \"xyz\";</code>)[cite: 8].",
+  "<b>Symbolic Constants:</b> Created using the <code>const</code> keyword (e.g., <code>const int size = 10;</code>) or <code>enum</code>[cite: 8].",
+  "<b>Variable Placement & Dynamic Initialization:</b> Variables can be declared anywhere in the scope right before first use, and initialized at runtime with expressions: <code>float average = sum / i;</code>[cite: 8]."
+ ]
+],
+["5. Expressions & Operators",
+ [
+  "<b>Expression Types:</b> Constant, Integral (produce integer results), Floating (produce float results), Relational (produce bool 0/1), Logical, Pointer (produce memory addresses), Bitwise (shift/test bits, valid only for <code>char</code> and <code>int</code>), and Compound expressions[cite: 11].",
+  "<b>Operator Categories:</b> Unary (1 operand), Binary (2 operands), Ternary (3 operands: <code>exp1 ? exp2 : exp3</code>)[cite: 13, 21].",
+  "<b>Operator Types:</b> Arithmetic (+, -, *, /, %), Relational (==, !=, &gt;, &lt;, &gt;=, &lt;=), Logical (&amp;&amp;, ||, !), Bitwise (&amp;, |, ^, &lt;&lt;, &gt;&gt;, ~), Assignment (=, +=, -=, *=, /=)[cite: 12, 13, 14, 15, 16].",
+  "<b>Pre vs Post Increment:</b> <code>++a</code> increments first then evaluates; <code>a++</code> evaluates current value first then increments[cite: 13].",
+  "<b>Miscellaneous Operators:</b> <code>sizeof</code> (memory size in bytes), comma <code>,</code> (sequential evaluation), address-of <code>&amp;</code>, member access <code>.</code>, pointer arrow <code>-&gt;</code>, casting operators (e.g., <code>static_cast&lt;float&gt;(x)</code>)[cite: 21, 22].",
+  "<b>Precedence & Associativity:</b> Dictates execution order; operators with identical precedence are evaluated according to associativity (left-to-right or right-to-left)[cite: 22]."
+ ]
+],
+["6. Namespaces, Control Structures & Parameter Passing",
+ [
+  "<b>Namespace:</b> Logical container preventing identifier collisions across libraries (e.g., <code>Room1::greet()</code> or <code>using namespace std;</code>)[cite: 22, 23].",
+  "<b>Control Structures:</b> Conditional branching (<code>if</code>, <code>if-else</code>, <code>switch</code>) and loops (<code>for</code>, <code>while</code>, <code>do-while</code>)[cite: 23, 24].",
+  "<b>Functions:</b> Program divided into modular callable units with actual parameters (in caller) and formal parameters (in called function)[cite: 24, 25].",
+  "<b>Parameter Passing Modes:</b> Pass by Value (copies variable data), Pass by Address (passes pointer address <code>swap(&amp;a, &amp;b)</code>), and Pass by Reference (uses reference alias <code>void swap(int &amp;a, int &amp;b)</code>; can also return by reference <code>int&amp; func()</code>)[cite: 25, 26, 27]."
+ ]
+]],
+quiz:[
+ ["1. Who developed the C++ programming language?",["Dennis Ritchie","Bjarne Stroustrup","James Gosling","Ken Thompson"],1],
+ ["2. Wrapping data and member functions into a single unit is known as?",["Abstraction","Encapsulation","Polymorphism","Inheritance"],1],
+ ["3. Procedural Oriented Programming follows which design approach?",["Top-down","Bottom-up","Inside-out","Hybrid"],0],
+ ["4. Which operator can only be used with integer operands?",["/","%","*","+"],1],
+ ["5. In C++, for a string literal \"xyz\", what is the minimum required array size?",["3","4","5","2"],1],
+ ["6. An expression that yields a bool result (true/false) is classified as a?",["Constant expression","Integral expression","Relational expression","Bitwise expression"],2],
+ ["7. What is the value of 50 / 25 * 2 based on operator precedence and associativity?",["1","4","0","25"],1],
+ ["8. Which feature allows attaching names to numbers automatically starting from 0?",["typedef","struct","enum","class"],2],
+ ["9. How do you resolve naming conflicts between different modules or libraries in C++?",["Templates","Namespaces","Pointers","Inheritance"],1],
+ ["10. In pass by reference, which operator is placed with the parameter in the function declaration?",["*","&","::","->"],1]
+],
+ex:[["Loop and sum",`#include <iostream>
+using namespace std;
+int main() {
+    int n = 5;
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += i;
+        cout << "i=" << i << " sum=" << sum << endl;
+    }
+    cout << "Total: " << sum << endl;
+    return 0;
+}`,"i=1 sum=1\ni=2 sum=3\ni=3 sum=6\ni=4 sum=10\ni=5 sum=15\nTotal: 15\n"]]},
+
+{n:"Unit II",t:"Classes and Objects",s:"Classes, objects, member data and functions, constructors and types, destructors, inline and friend functions, array of objects, objects as arguments, memory allocation, static members.",
+notes:[
+["1. Classes, Objects & Member Functions",
+ [
+  "<b>Class Specification:</b> Consists of Class Declaration (specifies data members and method prototypes) and Function Definition (implementation)[cite: 28].",
+  "<b>Access Specifiers:</b> <code>private</code> (accessible only by member functions of the same class) and <code>public</code> (accessible from outside the class)[cite: 28].",
+  "<b>Defining Methods:</b> Inside the class declaration (automatically treated as inline if feasible) or outside using scope resolution: <code>void Student::getData() { ... }</code>[cite: 28, 29].",
+  "<b>Array of Objects:</b> Array storing class instances: <code>Employee emp[10];</code> where each element contains its own distinct data members[cite: 36]."
+ ]
+],
+["2. Constructors & Overloading",
+ [
+  "<b>Constructor:</b> Special member function that initializes objects[cite: 31]. Invoked automatically at instantiation; has identical name to the class, has no return type (not even <code>void</code>), and resides in <code>public</code> section[cite: 31].",
+  "<b>Default Constructor:</b> Takes no arguments or has default arguments for all parameters[cite: 31, 32].",
+  "<b>Parameterized Constructor:</b> Takes parameters; invoked explicitly: <code>Integer o = Integer(10, 20);</code> or implicitly: <code>Integer o(10, 20);</code>[cite: 31].",
+  "<b>Copy Constructor:</b> Initializes an object using another existing object of the same class: <code>ClassName(const ClassName &amp;obj)</code>[cite: 31]. Supplied automatically by compiler if omitted[cite: 31].",
+  "<b>Dynamic Constructor:</b> Allocates memory dynamically for objects during construction using the <code>new</code> operator[cite: 31, 32].",
+  "<b>Constructor Overloading:</b> Multiple constructors sharing the same name but differentiated by parameter count and data types[cite: 33]."
+ ]
+],
+["3. Destructors",
+ [
+  "<b>Destructor:</b> Executes automatically when an object leaves scope or is explicitly deleted, releasing allocated memory and resources[cite: 34].",
+  "<b>Characteristics:</b> Class name preceded by a tilde (<code>~Student()</code>); takes no arguments and has no return value[cite: 34].",
+  "<b>Restrictions:</b> Destructors cannot be overloaded and cannot be declared <code>static</code>[cite: 34]. They execute in exact reverse order of object construction.",
+  "<b>Deallocation:</b> Critical for reclaiming heap resources dynamically allocated by constructors."
+ ]
+],
+["4. Inline and Friend Functions",
+ [
+  "<b>Inline Functions:</b> Keyword <code>inline</code> requests the compiler to expand the function body in-line at each call site, eliminating function call overhead for small routines[cite: 35].",
+  "<b>Friend Function:</b> Non-member function granted access to private and protected members of a class using the <code>friend</code> keyword[cite: 30].",
+  "<b>Properties of Friend Functions:</b> Not in class scope; cannot be called using the dot operator (invoked like regular functions); takes objects as parameters; commonly used in operator overloading[cite: 30]."
+ ]
+],
+["5. Objects as Arguments & Memory Allocation",
+ [
+  "<b>Passing Objects:</b> Objects can be passed to functions by value (copy) or by reference/pointer (avoids copying overhead)[cite: 37, 38].",
+  "<b>Returning Objects:</b> Functions can return an object instance (e.g., <code>Example add(Example Ea, Example Eb)</code>)[cite: 38, 39].",
+  "<b>Memory Layout:</b> Member functions are shared across all instances in code memory, but each object instance maintains its own separate copy of non-static data members[cite: 42]."
+ ]
+],
+["6. Static Data Members and Functions",
+ [
+  "<b>Static Data Member:</b> Only a single copy is maintained in memory for the entire class, shared by every created object instance[cite: 40].",
+  "<b>Initialization:</b> Automatically initialized to zero upon first object creation; must be defined globally outside the class: <code>int GfG::count = 0;</code>[cite: 40, 43].",
+  "<b>Lifetime & Scope:</b> Scope is local to the class, but its lifetime spans the entire program execution[cite: 40].",
+  "<b>Static Member Functions:</b> Can only access static data members or other static member functions; invoked using class name: <code>ClassName::func()</code> without an object."
+ ]
+]],
+quiz:[
+ ["1. By default, members of a C++ class are?",["public","protected","private","static"],2],
+ ["2. Which special member function is automatically invoked when an object is created?",["Destructor","Inline function","Friend function","Constructor"],3],
+ ["3. What symbol precedes the name of a destructor function?",["&","~","*","::"],1],
+ ["4. Can a destructor accept arguments or return values?",["Yes, it can return int","It accepts arguments but no returns","No arguments and no return types","Yes, it can be overloaded"],2],
+ ["5. Which keyword suggests that the compiler replace function calls with the actual function code?",["friend","virtual","inline","static"],2],
+ ["6. A friend function of a class:",["Must be a member of that class","Can access private members of the class","Is invoked using object.friendFunc()","Cannot take objects as arguments"],1],
+ ["7. How many copies of a static data member are created for multiple class objects?",["One per object","One shared copy for the whole class","Two copies","Depends on constructor parameters"],1],
+ ["8. When is a copy constructor invoked?",["When an object is initialized from another object of the same class","When a pointer is deleted","When an object goes out of scope","When static methods are executed"],0],
+ ["9. Dynamic construction of an object allocates memory at construction time using which operator?",["malloc","new","create","alloc"],1],
+ ["10. How is a static member function invoked from outside the class without an instance?",["object.func()","ClassName::func()","->func()","friend::func()"],1]
+],
+ex:[["Constructor and destructor",`#include <iostream>
+using namespace std;
+class Student {
+    int roll;
+public:
+    Student(int r) { roll = r; cout << "Constructor " << roll << endl; }
+    ~Student() { cout << "Destructor " << roll << endl; }
+    void show() { cout << "Roll: " << roll << endl; }
+};
+int main() {
+    Student a(1), b(2);
+    a.show();
+    b.show();
+    return 0;
+}`,"Constructor 1\nConstructor 2\nRoll: 1\nRoll: 2\nDestructor 2\nDestructor 1\n"]]},
+
+{n:"Unit III",t:"Inheritance and Compile Time Polymorphism",s:"Derived classes, single, multilevel, multiple, hierarchical, hybrid inheritance; function and operator overloading; unary, binary, friend operators.",
+notes:[
+["1. Inheritance Principles & Types",
+ [
+  "<b>Concept:</b> Mechanism where a new derived class acquires properties and behaviors of an existing base class to enable reusability[cite: 45].",
+  "<b>Syntax:</b> <code>class Derived : visibilityMode Base { ... };</code>[cite: 45]",
+  "<b>Single Inheritance:</b> One derived class inherits from exactly one base class (Base &rarr; Derived)[cite: 45].",
+  "<b>Multiple Inheritance:</b> One derived class inherits simultaneously from multiple base classes (Base1, Base2 &rarr; Derived)[cite: 46].",
+  "<b>Multilevel Inheritance:</b> Derived class inherits from a class which is itself derived from another class (Class A &rarr; Class B &rarr; Class C)[cite: 49].",
+  "<b>Hierarchical Inheritance:</b> Multiple derived classes inherit from a single common base class (Base &rarr; Derived1, Derived2, Derived3)[cite: 48].",
+  "<b>Hybrid (Diamond) Inheritance:</b> Combination of two or more inheritance types (e.g., multilevel combined with multiple inheritance)[cite: 51]."
+ ]
+],
+["2. Visibility Modes",
+ [
+  "<b>Private Members:</b> Never inherited directly by any derived class regardless of visibility mode.",
+  "<b>Public Mode:</b> Public members of base remain public in derived; protected remain protected.",
+  "<b>Protected Mode:</b> Public and protected members of base become protected in derived class.",
+  "<b>Private Mode:</b> Public and protected members of base become private in the derived class."
+ ]
+],
+["3. Compile-Time Polymorphism (Static Binding)",
+ [
+  "<b>Definition:</b> Function call is bound to code at compile-time based on argument types and count (Early / Static Binding)[cite: 53].",
+  "<b>Mechanism:</b> Achieved in C++ via Function Overloading and Operator Overloading[cite: 53].",
+  "<b>Advantages:</b> Fast execution since binding is determined early before runtime[cite: 71]."
+ ]
+],
+["4. Operator Overloading: Unary & Binary",
+ [
+  "<b>Concept:</b> Giving additional special meanings to existing C++ operators when applied to user-defined types using operator functions: <code>ReturnType ClassName::operator op(argList)</code>[cite: 53].",
+  "<b>Unary Operator Overloading:</b> Operates on one operand (e.g., <code>-S</code> or <code>++a</code>)[cite: 53]. Takes no parameters when defined as a member function; takes 1 object reference when declared as a friend function[cite: 54, 56].",
+  "<b>Binary Operator Overloading:</b> Operates on two operands (e.g., <code>c3 = c1 + c2</code>). Member function takes 1 explicit argument (the right operand, left is calling object <code>*this</code>); friend function takes 2 explicit arguments[cite: 54, 55]."
+ ]
+],
+["5. Operator Overloading with Friend Functions",
+ [
+  "<b>Syntax:</b> <code>friend ReturnType operator op(Type1 arg1, Type2 arg2);</code>[cite: 55]",
+  "<b>Usage:</b> Required when the left operand of a binary operator is not a class object (e.g., <code>cout &lt;&lt; obj</code> or <code>10 + obj</code>)."
+ ]
+],
+["6. Non-Overloadable Operators & Function Overloading vs Overriding",
+ [
+  "<b>Operators that CANNOT be overloaded:</b> <code>sizeof</code>, Member access (<code>.</code>), Pointer-to-member (<code>.*</code>), Scope resolution (<code>::</code>), Conditional ternary (<code>?:</code>)[cite: 56].",
+  "<b>Function Overloading:</b> Multiple functions with the same name but different signatures within the same scope; resolved at compile-time[cite: 57, 58].",
+  "<b>Function Overriding:</b> Derived class redefines a base class function with identical signature and return type; resolved at runtime[cite: 58]."
+ ]
+]],
+quiz:[
+ ["1. In which inheritance type does a single derived class inherit from multiple base classes?",["Hierarchical","Single","Multiple","Multilevel"],2],
+ ["2. Inheritance where Class C derives from Class B, and Class B derives from Class A is called?",["Multiple inheritance","Multilevel inheritance","Hierarchical inheritance","Single inheritance"],1],
+ ["3. What happens to the private members of a base class during public inheritance?",["They become public in derived class","They become protected in derived class","They are not directly accessible in derived class","They become static"],2],
+ ["4. Overloading functions and operators is an implementation of which type of polymorphism?",["Compile-time polymorphism","Run-time polymorphism","Dynamic polymorphism","Late binding"],0],
+ ["5. How many explicit arguments does an overloaded binary operator member function take?",["0","1","2","3"],1],
+ ["6. When overloading a unary operator using a friend function, how many arguments are required?",["0","1","2","Depends on operator"],1],
+ ["7. Which of the following operators CANNOT be overloaded in C++?",["+","==","::","[]"],2],
+ ["8. Which other operator cannot be overloaded?",[">>","sizeof","=","++"],1],
+ ["9. What differentiates overloaded functions in the same scope?",["Only return type","Function signatures (parameter number or types)","Function names","Access specifiers"],1],
+ ["10. What is the keyword used to define an operator overloading function?",["overload","operator","friend","virtual"],1]
+],
+ex:[["Single inheritance",`#include <iostream>
+using namespace std;
+class Animal {
+public:
+    void eat() { cout << "Eating" << endl; }
+};
+class Dog : public Animal {
+public:
+    void bark() { cout << "Barking" << endl; }
+};
+int main() {
+    Dog d;
+    d.eat();
+    d.bark();
+    return 0;
+}`,"Eating\nBarking\n"]]},
+
+{n:"Unit IV",t:"Pointers and Runtime Polymorphism",s:"Pointer arithmetic, this pointer, base/derived pointers, compile vs runtime polymorphism, virtual functions, late binding, abstract classes, pure virtual functions, virtual destructors, virtual base class.",
+notes:[
+["1. Pointers & Pointer Arithmetic",
+ [
+  "<b>Definition:</b> Derived data type storing the memory address of another variable: <code>int *ptr = &amp;a;</code>[cite: 59]. Indirection/dereferencing operator <code>*ptr</code> accesses or updates memory contents[cite: 59].",
+  "<b>Increment / Decrement:</b> Adding or subtracting 1 changes the address by <code>sizeof(dataType)</code> bytes (e.g., <code>ptr++</code> adds 4 bytes for an integer pointer)[cite: 60].",
+  "<b>Pointer Addition / Subtraction:</b> <code>ptr + k</code> increments address by <code>k * sizeof(type)</code>[cite: 61, 62]. Subtraction between two pointers of the same array yields the number of elements separating them[cite: 62, 63].",
+  "<b>Pointer Comparisons:</b> Relational operators (<code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>) check whether pointers point to the same memory address or evaluate against <code>NULL</code>[cite: 63, 64]."
+ ]
+],
+["2. The 'this' Pointer",
+ [
+  "<b>Concept:</b> Implicit pointer passed into all non-static member functions pointing to the calling object instance[cite: 65].",
+  "<b>Applications:</b> Resolves name ambiguities between parameters and member variables (<code>this-&gt;age = age;</code>), and facilitates method chaining by returning the current instance: <code>return *this;</code>[cite: 65, 66]."
+ ]
+],
+["3. Pointers to Base and Derived Classes",
+ [
+  "<b>Base Pointer to Derived:</b> A base class pointer can hold the address of a derived class object[cite: 68, 71].",
+  "<b>Default Behavior:</b> Without virtual functions, calling a function through a base pointer invokes the base version because binding occurs at compile time based on pointer type[cite: 71]."
+ ]
+],
+["4. Virtual Functions & Late Binding",
+ [
+  "<b>Virtual Function:</b> Declared in base class using the <code>virtual</code> keyword; tells compiler to perform dynamic/late binding at runtime based on the actual object being pointed to[cite: 71, 72].",
+  "<b>Late Binding:</b> Code matching is postponed until execution time, enabling true runtime polymorphism[cite: 72].",
+  "<b>Compile-Time vs Run-Time Polymorphism:</b> Compile-time is resolved by compiler, provides faster execution, and relies on overloading; Runtime polymorphism is resolved dynamically, provides greater flexibility, and relies on virtual functions and inheritance[cite: 70, 71]."
+ ]
+],
+["5. Pure Virtual Functions & Abstract Classes",
+ [
+  "<b>Pure Virtual Function:</b> Declared with <code>= 0</code> with no body in the base class: <code>virtual void draw() = 0;</code>[cite: 73].",
+  "<b>Abstract Class:</b> Any class with at least one pure virtual function; serves as an interface and cannot be instantiated directly (<code>Shape s;</code> gives compiler error)[cite: 73, 74]. Derived classes must override all pure virtual functions to be instantiated[cite: 73]."
+ ]
+],
+["6. Virtual Destructors & Virtual Base Classes",
+ [
+  "<b>Virtual Destructor:</b> If a derived object is deleted via a base class pointer without a virtual destructor (<code>virtual ~Base()</code>), only the base destructor executes, resulting in undefined behavior and resource leaks[cite: 75].",
+  "<b>Virtual Base Class:</b> Resolves diamond inheritance ambiguity where derived class inherits duplicate copies of a common ancestor base class (e.g., <code>class B : virtual public A</code>)[cite: 76, 78]. Ensures only one shared copy of base class members exists in the child class[cite: 78, 79]."
+ ]
+]],
+quiz:[
+ ["1. What does the indirection / dereference operator (*) do when applied to a pointer?",["Returns the address","Accesses or modifies the value at that address","Allocates new memory","Compares two addresses"],1],
+ ["2. If an integer pointer ptr at address 1000 is incremented (ptr++), what is the new address (assuming 4-byte int)?",["1001","1002","1004","1008"],2],
+ ["3. What is the 'this' pointer in C++?",["Pointer to the derived class","Implicit pointer pointing to the invoking object","Pointer to the base class","Global pointer to main()"],1],
+ ["4. What does subtracting two pointers pointing to the same array result in?",["The byte address sum","The number of elements between them","A boolean value","A syntax error"],1],
+ ["5. Which mechanism enables dynamic or late binding in C++?",["Inline functions","Templates","Virtual functions","Friend functions"],2],
+ ["6. How is a pure virtual function declared in a base class?",["virtual void f() = default;","virtual void f() = 0;","void f() = NULL;","virtual void f() {}"],1],
+ ["7. What is true about an abstract class?",["It contains only static members","Objects cannot be directly instantiated from it","It cannot be inherited","It must not have constructors"],1],
+ ["8. Why is a virtual destructor used in a base class?",["To prevent constructor calls","To ensure proper cleanup of derived objects when deleted via base pointers","To speed up execution","To make destructors overloadable"],1],
+ ["9. What problem does a 'virtual base class' resolve in hybrid/diamond inheritance?",["Memory leak on deletion","Ambiguity due to multiple inherited copies of the common ancestor","Slow compilation","Pointer typecasting issues"],1],
+ ["10. Dynamic binding occurs at which phase?",["Compile time","Link time","Runtime","Pre-processing time"],2]
+],
+ex:[["Virtual function",`#include <iostream>
+using namespace std;
+class Shape {
+public:
+    virtual void draw() { cout << "Shape" << endl; }
+    virtual ~Shape() {}
+};
+class Circle : public Shape {
+public:
+    void draw() override { cout << "Circle" << endl; }
+};
+int main() {
+    Shape* p = new Circle();
+    p->draw();
+    delete p;
+    return 0;
+}`,"Circle\n"]]},
+
+{n:"Unit V",t:"Templates and Exception Handling",s:"Class templates, function templates, overloading template functions, strings, iterators, hashes, IO streams, exception handling.",
+notes:[
+["1. Function Templates & Class Templates",
+ [
+  "<b>Templates:</b> Blueprint for generic programming allowing a single code definition to support multiple data types[cite: 80].",
+  "<b>Function Template:</b> Defines generic functions for a family of types: <code>template &lt;class T&gt; T add(T a, T b) { return a + b; }</code>[cite: 80].",
+  "<b>Class Template:</b> Creates a generic class family parameterized by type: <code>template &lt;class T&gt; class Sample { T val; };</code>. Instantiated using concrete types: <code>Sample&lt;int&gt; obj1;</code>[cite: 81]."
+ ]
+],
+["2. Overloading Template Functions",
+ [
+  "<b>Concept:</b> A template function can be overloaded with another template function with different parameter counts or with a normal non-template function[cite: 81].",
+  "<b>Resolution Priority:</b> When an explicit non-template function matches the invocation arguments exactly, the compiler selects the non-template version over generic template functions[cite: 81, 83]."
+ ]
+],
+["3. STL Strings, Iterators & Hashes",
+ [
+  "<b>std::string Class:</b> Sequence of characters providing member operations like <code>insert()</code>, <code>replace()</code>, <code>erase()</code>, <code>append()</code>, and <code>length()</code>[cite: 84].",
+  "<b>Iterators:</b> Pointer-like objects used to traverse elements of STL containers without exposing internal structures: <code>for(auto it = v.begin(); it != v.end(); ++it)</code>[cite: 83]. Categories include Input, Output, Forward, Bidirectional, and Random Access[cite: 83].",
+  "<b>std::hash Functor:</b> Unary function object generating hash code integers for keys; used by STL unordered associative containers[cite: 85]."
+ ]
+],
+["4. Standard I/O Streams",
+ [
+  "<b>Streams:</b> Sequences of bytes transferred between devices and memory. Defined in <code>&lt;iostream&gt;</code>[cite: 86].",
+  "<b>cin:</b> Object of <code>istream</code> class; reads input from keyboard using extraction operator <code>&gt;&gt;</code>[cite: 86].",
+  "<b>cout:</b> Object of <code>ostream</code> class; writes output using insertion operator <code>&lt;&lt;</code>[cite: 86].",
+  "<b>cerr:</b> Unbuffered standard error stream; flushes and displays error messages instantly[cite: 87].",
+  "<b>clog:</b> Buffered standard error stream; buffers error log output until flushed[cite: 92]."
+ ]
+],
+["5. Exception Handling Principles & Mechanisms",
+ [
+  "<b>Exceptions:</b> Runtime abnormal conditions (divide by zero, invalid input, memory exhaustion)[cite: 88]. Synchronous (internal program events like out-of-range) vs Asynchronous (external hardware interrupts)[cite: 88].",
+  "<b>Mechanism:</b> Implemented through three primary keywords: <code>try</code>, <code>throw</code>, and <code>catch</code>[cite: 88].",
+  "<b>try block:</b> Surrounds guarded code segments that could potentially produce errors[cite: 88].",
+  "<b>throw keyword:</b> Throws an exception object to report an error condition[cite: 88].",
+  "<b>catch block:</b> Follows the try block to intercept and handle the thrown exception object: <code>catch (int k) { ... }</code>. Catch-all syntax: <code>catch(...)</code> intercepts all unhandled types[cite: 88, 89]."
+ ]
+]],
+quiz:[
+ ["1. What programming paradigm is directly enabled by C++ templates?",["Object-based programming","Generic programming","Procedural programming","Functional programming"],1],
+ ["2. Which keyword is placed in angle brackets to define generic types in templates?",["typename or class","struct or dynamic","virtual or inline","generic"],0],
+ ["3. When both an explicit non-template function and a template function match a call exactly, which is invoked?",["The template function","The explicit non-template function","Compiler produces an error","Both are called sequentially"],1],
+ ["4. What is the primary purpose of an iterator in C++ STL?",["To measure container size","To act like a pointer traversing container elements","To sort elements automatically","To allocate heap storage"],1],
+ ["5. Which string member function deletes characters from a string object?",["delete()","erase()","drop()","clearLine()"],1],
+ ["6. Which standard stream object outputs errors immediately without buffering?",["cout","clog","cerr","cin"],2],
+ ["7. Which stream object buffers its output until flushed or full?",["cerr","clog","cin","stderr"],1],
+ ["8. Which keyword is used to signal or raise an exception in C++?",["try","catch","throw","raise"],2],
+ ["9. Errors like array out-of-bounds and divide-by-zero are classified as?",["Asynchronous exceptions","Synchronous exceptions","Compilation syntax errors","Hardware interrupts"],1],
+ ["10. What syntax is used to create a default catch handler that catches all uncaught exceptions?",["catch(all)","catch(...)","catch(void)","catch(default)"],1]
+],
+ex:[["Function template",`#include <iostream>
+using namespace std;
+template <typename T>
+T maxOf(T a, T b) { return (a > b) ? a : b; }
+int main() {
+    cout << maxOf(3, 7) << endl;
+    cout << maxOf(2.5, 1.5) << endl;
+    cout << maxOf('a', 'z') << endl;
+    return 0;
+}`,"7\n2.5\nz\n"]]},
+
+{n:"Unit VI",t:"I/O Systems and File I/O",s:"C++ streams, formatted and unformatted I/O, file stream classes, file modes, file operations, sequential read/write, binary and ASCII files, error handling.",
+notes:[
+["1. Unformatted Input/Output Operations",
+ [
+  "<b>Extraction Operator (&gt;&gt;):</b> Reads input delimited by whitespace characters[cite: 92, 93].",
+  "<b>get() and put():</b> Member functions of <code>istream</code>/<code>ostream</code> handling single characters including whitespace and newline characters: <code>cin.get(ch); cout.put(ch);</code>[cite: 94].",
+  "<b>getline() &amp; write():</b> Line-oriented stream handling. <code>cin.getline(buffer, size)</code> reads entire line including spaces until <code>'\\n'</code> (replacing it with <code>'\\0'</code>); <code>cout.write(buffer, size)</code> displays specified number of bytes[cite: 95, 96]."
+ ]
+],
+["2. Formatted Input/Output & Manipulators",
+ [
+  "<b>Formatted I/O:</b> Formats console output using manipulators from <code>&lt;iomanip&gt;</code>[cite: 97].",
+  "<b>Manipulators:</b> <code>std::setw(width)</code> sets field display width, <code>std::setprecision(n)</code> controls floating-point digits, <code>std::setfill(ch)</code> sets padding characters, and base specifiers <code>std::hex</code>, <code>std::dec</code>[cite: 97]."
+ ]
+],
+["3. File Stream Classes & Opening Modes",
+ [
+  "<b>Classes (&lt;fstream&gt;):</b> <code>ifstream</code> (reading), <code>ofstream</code> (writing), <code>fstream</code> (simultaneous read/write)[cite: 98, 99].",
+  "<b>Opening Modes:</b>",
+  "&bull; <code>ios::in</code>: Opens file for reading (fails if file does not exist)[cite: 98].",
+  "&bull; <code>ios::out</code>: Opens file for writing (creates or overwrites existing file)[cite: 98, 99].",
+  "&bull; <code>ios::app</code>: Append mode; all write operations occur at file end[cite: 99].",
+  "&bull; <code>ios::ate</code>: Opens file and positions stream pointer at the end[cite: 99].",
+  "&bull; <code>ios::trunc</code>: Truncates existing file content to 0 length[cite: 99].",
+  "&bull; <code>ios::binary</code>: Opens file in raw binary mode instead of formatted text mode[cite: 98].",
+  "<b>Combining Modes:</b> Modes are combined with bitwise OR: <code>fstream f(\"data.dat\", ios::in | ios::out | ios::binary);</code>[cite: 99]."
+ ]
+],
+["4. Sequential Read & Write Operations",
+ [
+  "<b>Writing Text:</b> Using the insertion operator: <code>file &lt;&lt; \"Text\" &lt;&lt; endl;</code>[cite: 99, 100].",
+  "<b>Reading Text:</b> Using extraction operator <code>file &gt;&gt; str;</code> (reads single words) or <code>getline(file, line);</code> (reads entire lines)[cite: 101, 102].",
+  "<b>Closing Files:</b> <code>file.close()</code> flushes internal stream buffers and frees file handles to prevent leaks and corruption[cite: 102]."
+ ]
+],
+["5. Binary Files vs ASCII Text Files",
+ [
+  "<b>Binary Files:</b> Store raw in-memory byte representations rather than ASCII text; requires <code>ios::binary</code>[cite: 106].",
+  "<b>write() Function:</b> <code>file.write(reinterpret_cast&lt;const char*&gt;(&amp;data), sizeof(data));</code> writes raw memory blocks[cite: 106].",
+  "<b>read() Function:</b> <code>file.read(reinterpret_cast&lt;char*&gt;(&amp;data), sizeof(data));</code> reads raw byte streams directly into memory variables[cite: 107, 108]."
+ ]
+],
+["6. File Error Handling Functions",
+ [
+  "<b>is_open():</b> Returns <code>true</code> if the file stream has been successfully associated with an open file[cite: 103].",
+  "<b>eof():</b> Returns <code>true</code> when stream reaches end-of-file condition[cite: 104, 105].",
+  "<b>fail():</b> Returns <code>true</code> if an input/output operation failed or format error occurred.",
+  "<b>bad():</b> Returns <code>true</code> if an unrecoverable read/write hardware or stream error occurred.",
+  "<b>good():</b> Returns <code>true</code> if all error flag bits are clear and file is ready for I/O."
+ ]
+]],
+quiz:[
+ ["1. Which stream class is designed specifically for reading from files?",["ofstream","ifstream","fstream","iostream"],1],
+ ["2. Which header file must be included to work with C++ file streams?",["<fileio>","<fstream>","<iostream>","<string>"],1],
+ ["3. What file mode appends new content to the end of an existing file?",["ios::in","ios::ate","ios::app","ios::trunc"],2],
+ ["4. What does the mode ios::trunc do when opening a file?",["Appends to existing content","Discards prior content, reducing length to zero","Opens in binary format","Reads only"],1],
+ ["5. Which member functions handle single-character unformatted input and output?",["get() and put()","read() and write()","scan() and print()","in() and out()"],0],
+ ["6. How does cin.getline() differ from cin >>?",["getline() only reads numbers","getline() reads complete lines containing whitespace until newline","cin >> reads whole lines","They are identical"],1],
+ ["7. Which header file is required to use manipulators like setw() and setprecision()?",["<iostream>","<iomanip>","<stdlib.h>","<fstream>"],1],
+ ["8. Which methods are used for reading and writing raw blocks of data in binary files?",["get() and put()","read() and write()","extract() and insert()","load() and save()"],1],
+ ["9. Which member function checks whether a file stream was successfully opened?",["file.is_open()","file.good()","file.opened()","file.status()"],0],
+ ["10. What does file.eof() return when reading reaches past the last byte of the file?",["false","true","EOF (-1)","NULL"],1]
+],
+ex:[["Write and read a file",`#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+int main() {
+    ofstream f("data.txt");
+    f << "Hello File" << endl;
+    f << 42 << endl;
+    f.close();
+    ifstream in("data.txt");
+    string line;
+    while (getline(in, line)) cout << line << endl;
+    return 0;
+}`,"Hello File\n42\n"]]}];
+
+const H="#include <iostream>\nusing namespace std;\n";
+const add=(u,t,c,o)=>U[u].ex.push([t,H+c,o]);
+add(0,"OOP concepts: class and object",`class Fruit { public: string name; void show() { cout << name << endl; } };
+int main() { Fruit mango; mango.name = "Mango"; mango.show(); return 0; }`,"Mango\n");
+add(0,"POP vs OOP",`int total = 0;
+void addp(int x) { total += x; }
+struct Counter { int n; void add(int x) { n += x; } };
+int main() {
+    addp(5); addp(7);
+    cout << "POP total: " << total << endl;
+    Counter c; c.n = 0; c.add(5); c.add(7);
+    cout << "OOP total: " << c.n << endl;
+    return 0;
+}`,"POP total: 12\nOOP total: 12\n");
+add(0,"Program structure and constants",`#define PI 3.14
+const int MAX = 3;
+int g = 10;
+int main() { cout << "PI=" << PI << " MAX=" << MAX << " g=" << g << endl; return 0; }`,"PI=3.14 MAX=3 g=10\n");
+add(0,"Tokens, data types, variables",`int main() {
+    int a = 7;
+    float f = 2.5;
+    char c = 'A';
+    string s = "OOP";
+    bool ok = true;
+    cout << a << " " << f << " " << c << " " << s << " " << ok << endl;
+    return 0;
+}`,"7 2.5 A OOP 1\n");
+add(0,"Operators, type conversion, decisions",`int main() {
+    int x = 17;
+    int y = x % 5;
+    double d = 7 / 2.0;
+    int t = 9.8;
+    cout << y << " " << d << " " << t << endl;
+    if (x > 10) cout << "big" << endl; else cout << "small" << endl;
+    return 0;
+}`,"2 3.5 9\nbig\n");
+add(1,"Class with member functions outside",`class Box { int w; public: void set(int x); int get(); };
+void Box::set(int x) { w = x; }
+int Box::get() { return w; }
+int main() { Box b; b.set(4); cout << "Width: " << b.get() << endl; return 0; }`,"Width: 4\n");
+add(1,"Constructor overloading and copy",`class P { int x, y; public:
+    P() { x = y = 0; }
+    P(int a, int b) { x = a; y = b; }
+    P(const P &o) { x = o.x; y = o.y; }
+    void show() { cout << x << "," << y << endl; } };
+int main() { P a; P b(3, 4); P c = b; a.show(); b.show(); c.show(); return 0; }`,"0,0\n3,4\n3,4\n");
+add(1,"Inline function",`inline int sq(int x) { return x * x; }
+int main() { cout << sq(5) << " " << sq(3) << endl; return 0; }`,"25 9\n");
+add(1,"Friend function",`class A { int v; public: A(int x) { v = x; } friend void show(A a); };
+void show(A a) { cout << "v=" << a.v << endl; }
+int main() { A a(9); show(a); return 0; }`,"v=9\n");
+add(1,"Static data and function",`class C { public: static int count; C() { count++; } static void print() { cout << "Objects: " << count << endl; } };
+int C::count = 0;
+int main() { C a, b, c; C::print(); return 0; }`,"Objects: 3\n");
+add(1,"Array of objects, objects as arguments",`class S { public: int m; void set(int x) { m = x; } };
+int total(S a, S b) { return a.m + b.m; }
+int main() { S arr[3]; for (int i = 0; i < 3; i++) arr[i].set(i * 10); cout << total(arr[1], arr[2]) << endl; return 0; }`,"30\n");
+add(2,"Multilevel and multiple inheritance",`class A { public: void a() { cout << "A" << endl; } };
+class B : public A { public: void b() { cout << "B" << endl; } };
+class C : public B { public: void c() { cout << "C" << endl; } };
+class X { public: void x() { cout << "X" << endl; } };
+class M : public A, public X {};
+int main() { C o; o.a(); o.b(); o.c(); M m; m.a(); m.x(); return 0; }`,"A\nB\nC\nA\nX\n");
+add(2,"Hierarchical inheritance",`class V { public: void go() { cout << "Vehicle moves" << endl; } };
+class Car : public V {};
+class Bike : public V {};
+int main() { Car c; Bike b; c.go(); b.go(); return 0; }`,"Vehicle moves\nVehicle moves\n");
+add(2,"Protected visibility",`class B { protected: int x; public: B() { x = 5; } };
+class D : public B { public: void show() { cout << "x=" << x << endl; } };
+int main() { D d; d.show(); return 0; }`,"x=5\n");
+add(2,"Function overloading",`int add(int a, int b) { return a + b; }
+double add(double a, double b) { return a + b; }
+int add(int a, int b, int c) { return a + b + c; }
+int main() { cout << add(2, 3) << " " << add(1.5, 2.5) << " " << add(1, 2, 3) << endl; return 0; }`,"5 4 6\n");
+add(2,"Operator overloading: unary, binary, friend",`class V { public: int x; V(int a) { x = a; }
+    V operator+(V o) { return V(x + o.x); }
+    void operator-() { x = -x; }
+    friend ostream& operator<<(ostream &os, V v) { return os << v.x; } };
+int main() { V a(3), b(4); V c = a + b; cout << c << endl; -c; cout << c << endl; return 0; }`,"7\n-7\n");
+add(3,"Pointers and pointer arithmetic",`int main() {
+    int a[3] = {10, 20, 30};
+    int *p = a;
+    cout << *p << " "; p++;
+    cout << *p << " " << *(p + 1) << endl;
+    int x = 5; int *q = &x; *q = 9;
+    cout << x << endl;
+    return 0;
+}`,"10 20 30\n9\n");
+add(3,"this pointer",`class T { int v; public: T(int v) { this->v = v; } T& inc() { v++; return *this; } void show() { cout << v << endl; } };
+int main() { T t(1); t.inc().inc(); t.show(); return 0; }`,"3\n");
+add(3,"Base pointer: compile time vs runtime",`class B { public: void f() { cout << "B::f" << endl; } virtual void g() { cout << "B::g" << endl; } };
+class D : public B { public: void f() { cout << "D::f" << endl; } void g() { cout << "D::g" << endl; } };
+int main() { D d; B *p = &d; p->f(); p->g(); return 0; }`,"B::f\nD::g\n");
+add(3,"Abstract class, pure virtual, virtual destructor",`class Shape { public: virtual double area() = 0; virtual ~Shape() { cout << "~Shape" << endl; } };
+class Sq : public Shape { double s; public: Sq(double x) { s = x; } double area() { return s * s; } ~Sq() { cout << "~Sq" << endl; } };
+int main() { Shape *p = new Sq(3); cout << p->area() << endl; delete p; return 0; }`,"9\n~Sq\n~Shape\n");
+add(3,"Virtual base class",`class A { public: int v; };
+class B : virtual public A {};
+class C : virtual public A {};
+class D : public B, public C {};
+int main() { D d; d.v = 8; cout << d.v << endl; return 0; }`,"8\n");
+add(4,"Class template",`template <class T> class Box { T v; public: Box(T x) { v = x; } T get() { return v; } };
+int main() { Box<int> a(5); Box<string> b("hi"); cout << a.get() << " " << b.get() << endl; return 0; }`,"5 hi\n");
+add(4,"Overloading template functions",`template <class T> T sum(T a, T b) { return a + b; }
+int sum(int a, int b, int c) { return a + b + c; }
+int main() { cout << sum(1, 2) << " " << sum(1.5, 2.5) << " " << sum(1, 2, 3) << endl; return 0; }`,"3 4 6\n");
+add(4,"Strings",`int main() {
+    string s = "Hello";
+    s += " World";
+    cout << s.length() << " " << s.substr(0, 5) << " " << s.find("World") << endl;
+    return 0;
+}`,"11 Hello 6\n");
+add(4,"Iterators and hashes",`#include <vector>
+#include <unordered_map>
+int main() {
+    vector<int> v = {3, 1, 2};
+    for (auto it = v.begin(); it != v.end(); ++it) cout << *it << " ";
+    cout << endl;
+    unordered_map<string, int> m; m["a"] = 1; m["b"] = 2;
+    cout << m["b"] << endl;
+    return 0;
+}`,"3 1 2 \n2\n");
+add(4,"Exception handling",`double divide(int a, int b) { if (b == 0) throw "Divide by zero"; return (double)a / b; }
+int main() {
+    try { cout << divide(6, 3) << endl; cout << divide(1, 0) << endl; }
+    catch (const char *e) { cout << "Error: " << e << endl; }
+    return 0;
+}`,"2\nError: Divide by zero\n");
+add(5,"Formatted and unformatted I/O",`#include <iomanip>
+int main() {
+    cout << setw(6) << 42 << "|" << setfill('*') << setw(6) << 7 << endl;
+    cout << fixed << setprecision(2) << 3.14159 << endl;
+    cout.put('A'); cout.put('\\n');
+    return 0;
+}`,"    42|*****7\n3.14\nA\n");
+add(5,"File modes: append",`#include <fstream>
+int main() {
+    ofstream o("n.txt"); o << "one" << endl; o.close();
+    ofstream a("n.txt", ios::app); a << "two" << endl; a.close();
+    ifstream i("n.txt"); string s;
+    while (i >> s) cout << s << endl;
+    return 0;
+}`,"one\ntwo\n");
+add(5,"Binary file, seek and error handling",`#include <fstream>
+int main() {
+    int n[3] = {10, 20, 30};
+    ofstream o("d.bin", ios::binary); o.write((char*)n, sizeof(n)); o.close();
+    ifstream i("d.bin", ios::binary); i.seekg(sizeof(int));
+    int x; i.read((char*)&x, sizeof(x)); cout << x << endl;
+    ifstream bad("missing.txt");
+    if (!bad) cout << "Cannot open file" << endl;
+    return 0;
+}`,"20\nCannot open file\n");
+
+/* ---- mini g++ simulator ---- */
+const strip=s=>s.replace(/\/\*[\s\S]*?\*\//g,m=>m.replace(/[^\n]/g,"")).replace(/\/\/.*$/gm,"");
+function compile(src){const c=strip(src),L=c.split("\n"),e=[];
+ const add=(l,m)=>e.push(`main.cpp:${l}:1: error:${m}`);
+ if(!/\bmain\s*\(/.test(c))e.push("/usr/bin/ld: undefined reference to `main'");
+ const cnt=(a,b)=>(c.match(new RegExp("\\"+a,"g"))||[]).length-(c.match(new RegExp("\\"+b,"g"))||[]).length;
+ if(cnt("{","}")>0)add(L.length,"expected '}' at end of input");if(cnt("{","}")<0)add(L.length,"expected declaration before '}' token");
+ if(cnt("(",")")!=0)add(L.length,"unbalanced parentheses");
+ if((c.replace(/\\"/g,"").match(/"/g)||[]).length%2)add(1,"missing terminating \" character");
+ const std=/using\s+namespace\s+std/.test(c);
+ L.forEach((l,i)=>{const t=l.trim();
+  if(/\b(cout|cin|endl)\b/.test(t)&&!/std::/.test(t)&&!std)add(i+1,"'"+t.match(/\b(cout|cin|endl)\b/)[1]+"' was not declared in this scope; did you mean 'std::"+t.match(/\b(cout|cin|endl)\b/)[1]+"'?");
+  else if(/\b(cout|cin)\b/.test(t)&&!/#include\s*<iostream>/.test(c))add(i+1,"'"+t.match(/\b(cout|cin)\b/)[1]+"' was not declared in this scope (missing #include <iostream>)");
+  if(/\b(ifstream|ofstream|fstream)\b/.test(t)&&!/<fstream>/.test(c))add(i+1,"'"+t.match(/\b(i|o)?fstream\b/)[0]+"' was not declared in this scope (missing #include <fstream>)");
+  if(!t||/^#|^(for|if|while|else|class|struct|template|public|private|protected|namespace|switch|case|default)\b/.test(t))return;
+  if(!/[A-Za-z0-9_"'\]]$/.test(t))return;
+  const nx=(L.slice(i+1).find(x=>x.trim())||"").trim();
+  if(/^(<<|>>|[-+*\/=&|?:.,])/.test(nx)||/^\{/.test(nx))return;
+  add(i+1,"expected ';' after statement");});
+ return e}
+function mEnd(s,i,o,c){let d=0;for(;i<s.length;i++){if(s[i]=='"'){i++;while(i<s.length&&s[i]!='"')i++}else if(s[i]==o)d++;else if(s[i]==c&&--d==0)return i}return s.length}
+function one(s,i){let r=s.slice(i).trimStart();i=s.length-r.length;let m=r.match(/^(for|while|if)\s*\(/);
+ if(m){const p=i+r.indexOf("("),e=mEnd(s,p,"(",")"),h=s.slice(p+1,e);let[b,j]=body(s,e+1);const n={t:m[1],h,b};
+  if(m[1]=="if"){const r2=s.slice(j).trimStart();if(/^else\b/.test(r2)){let k=s.length-r2.length+4;const r3=s.slice(k).trimStart();if(/^if\b/.test(r3)){const[x,j2]=one(s,k);n.e=[x];j=j2}else{const[b2,j2]=body(s,k);n.e=b2;j=j2}}}
+  return[n,j]}
+ let j=i;while(j<s.length&&s[j]!=";"){if(s[j]=='"'){j++;while(j<s.length&&s[j]!='"')j++}j++}return[{t:"s",s:s.slice(i,j).trim()},j+1]}
+function body(s,i){const r=s.slice(i).trimStart();i=s.length-r.length;if(s[i]=="{"){const e=mEnd(s,i,"{","}");return[parse(s.slice(i+1,e)),e+1]}const[n,j]=one(s,i);return[[n],j]}
+function parse(s){const o=[];let i=0;while(s.slice(i).trim()){const[n,j]=one(s,i);o.push(n);i=j}return o}
+function run(src){const c=strip(src),m=c.match(/int\s+main\s*\([^)]*\)\s*\{/);if(!m)return"error: no main()";
+ const st=m.index+m[0].length,b=c.slice(st,mEnd(c,st-1,"{","}")),env={},ty={};let out="",steps=0;
+ const ev=x=>{const k=Object.keys(env);return new Function(...k,"return ("+x+")")(...k.map(q=>env[q]))};
+ const fmt=v=>typeof v=="boolean"?(v?1:0):v;
+ const sp=(x,re)=>x.split(re);const QC=/,(?=(?:[^"]*"[^"]*")*[^"]*$)/,QL=/<<(?=(?:[^"]*"[^"]*")*[^"]*$)/;
+ const set=(n,v)=>{env[n]=/^(int|long)$/.test(ty[n])&&typeof v=="number"?Math.trunc(v):v};
+ function simple(s){let m;
+  if(/^return\b/.test(s))throw"ret";
+  if(m=s.match(/^cout\s*<<([\s\S]*)$/)){sp(m[1],QL).forEach(p=>{p=p.trim();out+=p=="endl"?"\n":fmt(ev(p))});return}
+  if(m=s.match(/^(int|long|float|double|char|string|bool|auto)\s+([\s\S]+)$/)){sp(m[2],QC).forEach(d=>{const[a,...r]=d.split("=");const n=a.trim();if(!/^\w+$/.test(n))throw"unsupported declaration: "+s;ty[n]=m[1];set(n,r.length?ev(r.join("=")):0)});return}
+  if(m=s.match(/^(\w+)\s*(\+\+|--)$/)){set(m[1],env[m[1]]+(m[2]=="++"?1:-1));return}
+  if((m=s.match(/^(\w+)\s*([+\-*\/%]?)=\s*([\s\S]+)$/))&&m[1] in env){const v=m[2]?ev(m[1]+m[2]+"("+m[3]+")"):ev(m[3]);set(m[1],v);return}
+  throw"unsupported statement: "+s}
+ function exec(ns){for(const n of ns){if(++steps>1e5)throw"infinite loop? stopped after 100000 steps";
+  if(n.t=="s")simple(n.s);
+  else if(n.t=="if"){if(ev(n.h))exec(n.b);else if(n.e)exec(n.e)}
+  else if(n.t=="while"){while(ev(n.h)){exec(n.b);steps++>1e5&&(()=>{throw"loop limit"})()}}
+  else{const p=n.h.split(";");simple(p[0].trim());while(ev(p[1])){exec(n.b);simple(p[2].trim());if(++steps>1e5)throw"loop limit"}}}}
+ try{exec(parse(b))}catch(e){if(e!="ret")return out+"\n[simulator] "+(e.message||e)}return out}
+function sim(src,ex){const e=compile(src);
+ let h="$ g++ -std=c++17 -Wall main.cpp -o main\n";
+ if(e.length)return[h+e.join("\n")+`\n${e.length} error(s) generated. Compilation terminated.`,1];
+ h+="Compilation successful (0 errors)\n$ ./main\n";
+ const hit=ex.find(x=>x[1]==src);let o;
+ if(hit)o=hit[2];else if(/\b(class|struct|template|new|ifstream|ofstream|virtual|cin)\b/.test(src))o="[simulator] Edited programs using classes, templates, pointers, files or cin cannot be executed here. Run the bundled example for its output, or try a basic-statement program.\n";
+ else o=run(src);
+ return[h+o+"[exit code 0]",0]}
+
+/* ----  Chatbot Tutor Knowledge Engine ---- */
+const KB=[
+ {kw:["pop","procedural","versus","difference","oop vs pop"],a:"<b>POP vs OOP:</b><br>&bull; <b>POP</b> divides programs into functions, uses a top-down approach, lacks data hiding, and data moves freely[cite: 4, 5].<br>&bull; <b>OOP</b> divides programs into objects, follows a bottom-up model, hides data behind access specifiers (private/public), and supports polymorphism and inheritance[cite: 4, 5]."},
+ {kw:["encapsulation","abstraction","data hiding"],a:"<b>Encapsulation & Abstraction:</b><br>&bull; <b>Encapsulation</b> wraps data and functions into a single unit (class) to prevent direct outside modification (data hiding)[cite: 2].<br>&bull; <b>Data Abstraction</b> represents essential features while hiding internal background details[cite: 2]."},
+ {kw:["structure of c++","c++ program structure","link section","main function","documentation"],a:"<b>Structure of a C++ Program:</b><br>&bull; <b>Documentation Section:</b> Descriptive comments (// or /* */)[cite: 3].<br>&bull; <b>Link Section:</b> Includes header files (<code>#include &lt;iostream&gt;</code>)[cite: 3].<br>&bull; <b>Definition Section:</b> Defines constants/macros (<code>#define PI 3.14</code>)[cite: 3].<br>&bull; <b>Global Declaration:</b> Declares global variables and prototypes[cite: 3].<br>&bull; <b>Class Declaration:</b> Defines class structures and members[cite: 3].<br>&bull; <b>main() Function:</b> Program execution entry point[cite: 3].<br>&bull; <b>User-Defined Functions:</b> Implements class methods outside class[cite: 4]."},
+ {kw:["tokens","token","keyword","identifier","constant"],a:"<b>Tokens in C++:</b><br>&bull; The smallest individual units: Keywords, Identifiers, Constants, Strings, Operators[cite: 6].<br>&bull; <b>Keywords:</b> Reserved identifiers (break, class, if)[cite: 6].<br>&bull; <b>Identifiers:</b> User-defined variable/function names. Cannot start with a digit[cite: 6].<br>&bull; <b>Constants:</b> Fixed values that do not change during program execution[cite: 6]."},
+ {kw:["pass by","parameter passing","pass by value","pass by reference","pass by address"],a:"<b>Parameter Passing Techniques:</b><br>&bull; <b>Pass by Value:</b> Copies the argument's value into formal parameters. Original values remain unchanged[cite: 25].<br>&bull; <b>Pass by Address:</b> Passes pointer addresses (<code>swap(&a, &b)</code>); uses dereferencing inside[cite: 26].<br>&bull; <b>Pass by Reference:</b> Passes alias to the original variable using reference operator (<code>void swap(int &a, int &b)</code>). Changes affect actual arguments directly[cite: 26, 27]."},
+ {kw:["constructor","default constructor","copy constructor","parameterized constructor"],a:"<b>Constructors in C++:</b><br>&bull; A special member function with the exact same name as the class and no return type (not even void)[cite: 31].<br>&bull; <b>Default:</b> takes no arguments[cite: 31, 32].<br>&bull; <b>Parameterized:</b> takes initial arguments upon declaration[cite: 31].<br>&bull; <b>Copy:</b> initializes an object using another instance (<code>ClassName(const ClassName &o)</code>)[cite: 31]."},
+ {kw:["destructor","~"],a:"<b>Destructors:</b><br>&bull; Automatically invoked when an object goes out of scope or is deleted[cite: 34].<br>&bull; Takes no parameters and cannot return values[cite: 34].<br>&bull; Preceded by tilde (<code>~ClassName()</code>) and cannot be overloaded[cite: 34]."},
+ {kw:["inline","inline function"],a:"<b>Inline Functions:</b><br>&bull; Defined with <code>inline return_type func()</code>[cite: 35].<br>&bull; Requests the compiler to expand the function body in place of the call, avoiding function call overhead for compact routines[cite: 35]."},
+ {kw:["friend function","friend"],a:"<b>Friend Function:</b><br>&bull; A non-member function granted access to a class's private/protected members[cite: 30].<br>&bull; Declared using keyword <code>friend</code> inside the class[cite: 30].<br>&bull; Invoked like a regular C++ function, not through an object (e.g. <code>show(obj);</code>, not <code>obj.show();</code>)[cite: 30]."},
+ {kw:["static","static member","static function"],a:"<b>Static Members:</b><br>&bull; <b>Static Data Member:</b> Only one shared copy exists in memory for the entire class, initialized to 0[cite: 40].<br>&bull; <b>Static Function:</b> Can only access static data or static functions and is invoked via <code>ClassName::function()</code>[cite: 44]."},
+ {kw:["inheritance","types of inheritance","multiple","multilevel","hierarchical","hybrid"],a:"<b>Inheritance Types:</b><br>1. <b>Single:</b> 1 Base &rarr; 1 Derived[cite: 45].<br>2. <b>Multilevel:</b> A &rarr; B &rarr; C[cite: 49].<br>3. <b>Multiple:</b> Several Base classes &rarr; 1 Derived class[cite: 46].<br>4. <b>Hierarchical:</b> 1 Base class &rarr; Several Derived classes[cite: 48].<br>5. <b>Hybrid:</b> Combination of multiple and multilevel (diamond)[cite: 51]."},
+ {kw:["operator overloading","overloading operators","cannot overload"],a:"<b>Operator Overloading:</b><br>&bull; Gives special meaning to standard operators when used with classes: <code>ReturnType operator op(params)</code>[cite: 53].<br>&bull; <b>Operators that CANNOT be overloaded:</b> <code>sizeof</code>, <code>.</code> (dot), <code>.*</code> (pointer to member), <code>::</code> (scope resolution), and <code>?:</code> (ternary)[cite: 56]."},
+ {kw:["pointer","pointer arithmetic","pointers"],a:"<b>Pointers & Pointer Arithmetic:</b><br>&bull; Variable storing address of another variable: <code>int *ptr = &a;</code>[cite: 59].<br>&bull; <code>ptr++</code> moves pointer by <code>sizeof(dataType)</code> bytes[cite: 60].<br>&bull; Subtracting two pointers of the same array yields the number of elements between them[cite: 62, 63]."},
+ {kw:["this pointer","this"],a:"<b>The 'this' Pointer:</b><br>&bull; An implicit pointer available inside all non-static member functions pointing to the invoking instance[cite: 65].<br>&bull; Used to resolve variable shadowing (<code>this->x = x;</code>) and to return current object references for method chaining (<code>return *this;</code>)[cite: 65, 66]."},
+ {kw:["virtual function","late binding","dynamic binding","runtime polymorphism"],a:"<b>Virtual Functions & Late Binding:</b><br>&bull; A member function in a base class declared with <code>virtual</code> and overridden in derived classes[cite: 71, 72].<br>&bull; Causes the compiler to postpone function binding to runtime (dynamic binding), invoking the derived class version via a base pointer[cite: 72]."},
+ {kw:["abstract class","pure virtual"],a:"<b>Abstract Classes & Pure Virtual Functions:</b><br>&bull; A pure virtual function is defined with <code>= 0</code> (e.g., <code>virtual void draw() = 0;</code>)[cite: 73].<br>&bull; A class with at least one pure virtual function is an <b>Abstract Class</b> and cannot be instantiated directly[cite: 73, 74]."},
+ {kw:["virtual destructor"],a:"<b>Virtual Destructor:</b><br>&bull; Defined in a base class as <code>virtual ~Base()</code>[cite: 75].<br>&bull; Ensures proper cleanup of derived class objects when deleted through a base class pointer[cite: 75]."},
+ {kw:["virtual base class","diamond problem"],a:"<b>Virtual Base Class:</b><br>&bull; Prevents duplicate copies of an ancestor base class from being inherited in diamond/hybrid inheritance (e.g., <code>class B : virtual public A</code>)[cite: 76, 78].<br>&bull; Guarantees only one single shared instance of class A members exists in class D[cite: 78, 79]."},
+ {kw:["template","function template","class template"],a:"<b>Templates in C++:</b><br>&bull; Supports generic programming: write code once for multiple data types[cite: 80].<br>&bull; <b>Function:</b> <code>template &lt;class T&gt; T add(T a, T b)</code>[cite: 80].<br>&bull; <b>Class:</b> <code>template &lt;class T&gt; class Stack { ... };</code>[cite: 81]."},
+ {kw:["exception","try","catch","throw"],a:"<b>Exception Handling:</b><br>&bull; <b>try:</b> surrounds statements that might raise runtime errors[cite: 88].<br>&bull; <b>throw:</b> signals an exception object[cite: 88].<br>&bull; <b>catch:</b> handles the thrown error (e.g. <code>catch(int err)</code> or catch-all <code>catch(...)</code>)[cite: 88, 89]."},
+ {kw:["cerr","clog","cout","cin","stream","streams"],a:"<b>C++ Stream Objects:</b><br>&bull; <code>cout</code>: Standard buffered output stream[cite: 86].<br>&bull; <code>cin</code>: Standard extraction input stream[cite: 86].<br>&bull; <code>cerr</code>: Unbuffered standard error stream (displays immediately)[cite: 87].<br>&bull; <code>clog</code>: Buffered error logging stream[cite: 92]."},
+ {kw:["file modes","ios::","ios::app","ios::trunc","ios::binary","fstream"],a:"<b>File Modes in &lt;fstream&gt;:</b><br>&bull; <code>ios::in</code>: Read mode[cite: 98].<br>&bull; <code>ios::out</code>: Write mode[cite: 98].<br>&bull; <code>ios::app</code>: Append to end[cite: 99].<br>&bull; <code>ios::trunc</code>: Discard existing contents[cite: 99].<br>&bull; <code>ios::binary</code>: Raw binary mode[cite: 98]."}
+];
+
+function getBotReply(q, uIdx){
+ const clean = q.toLowerCase().replace(/[^\w\s]/g, " ").trim();
+ for(let item of KB){
+  if(item.kw.some(k => clean.includes(k.toLowerCase()))) return item.a;
+ }
+ for(let note of U[uIdx].notes){
+  const titleClean = note[0].toLowerCase().replace(/[^\w\s]/g, " ");
+  const words = titleClean.split(/\s+/).filter(w => w.length > 3 && !["explain","introduction","concepts"].includes(w));
+  if(words.some(w => clean.includes(w))){
+   return `<b>${note[0]}:</b><ul>${note[1].map(l=>"<li>"+l+"</li>").join("")}</ul>`;
+  }
+ }
+ for(let u of U){
+  for(let note of u.notes){
+   const titleClean = note[0].toLowerCase().replace(/[^\w\s]/g, " ");
+   const words = titleClean.split(/\s+/).filter(w => w.length > 3);
+   if(words.some(w => clean.includes(w))){
+    return `<b>${note[0]} (${u.n}):</b><ul>${note[1].map(l=>"<li>"+l+"</li>").join("")}</ul>`;
+   }
+  }
+ }
+ return `I'm your AI Tutor! In <b>${U[uIdx].n} (${U[uIdx].t})</b>, you can ask about: ${U[uIdx].notes.map(n=>n[0]).join(", ")}. Try selecting any suggested topic chip below or type concepts like "constructors", "inheritance", "friend functions", or "pure virtual functions"!`;
+}
+
+function askTutor(txt){
+ if(!txt || !txt.trim()) return;
+ const msgs = $("chatMsgs");
+ msgs.innerHTML += `<div class="chat-msg user">${txt}</div>`;
+ $("chatIn").value = "";
+ msgs.scrollTop = msgs.scrollHeight;
+ setTimeout(()=>{
+  const reply = getBotReply(txt, cur);
+  msgs.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+ }, 200);
+}
+
+function askChip(noteIdx){
+ const note = U[cur].notes[noteIdx];
+ if(!note) return;
+ const msgs = $("chatMsgs");
+ msgs.innerHTML += `<div class="chat-msg user">Explain ${note[0]}</div>`;
+ msgs.scrollTop = msgs.scrollHeight;
+ setTimeout(()=>{
+  const reply = `<b>${note[0]}:</b><ul>${note[1].map(l=>"<li>"+l+"</li>").join("")}</ul>`;
+  msgs.innerHTML += `<div class="chat-msg bot">${reply}</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+ }, 150);
+}
+
+/* ---- Theme Management ---- */
+function initTheme(){
+ const saved = localStorage.getItem("lumina_theme");
+ if(saved) document.documentElement.setAttribute("data-theme", saved);
+}
+function toggleTheme(){
+ const curr = document.documentElement.getAttribute("data-theme");
+ const nxt = curr === "dark" ? "light" : "dark";
+ document.documentElement.setAttribute("data-theme", nxt);
+ localStorage.setItem("lumina_theme", nxt);
+}
+initTheme();
+
+/* ---- UI ---- */
+let cur=0;const done=(()=>{try{return JSON.parse(localStorage.getItem("oopdone")||"[]")}catch(e){return[]}})();
+const save=()=>{try{localStorage.setItem("oopdone",JSON.stringify(done))}catch(e){}};
+const $=id=>document.getElementById(id);
+function prog(){$("pb").style.width=done.length/U.length*100+"\%";$("pt").textContent=done.length+" of "+U.length+" units complete"}
+function show(i){cur=i;const u=U[i];
+ $("nav").innerHTML=U.map((x,k)=>`<button class="${k==i?"on":""}" onclick="show(${k})">${x.n}${done.includes(k)?" ✓":""}</button>`).join("");
+ $("m").innerHTML=`<div class="unit-head"><span class="unit-badge">Module Active</span><h2>${u.n}: ${u.t}</h2><p class="syl">${u.s}</p></div>
+ <section><h3>📘 Syllabus &amp; Concept Notes</h3>${u.notes.map((n,k)=>`<details ${k==0?"open":""}><summary>${n[0]}</summary><ul>${n[1].map(l=>"<li>"+l+"</li>").join("")}</ul></details>`).join("")}</section>
+ <section><h3>✨ AI Syllabus Tutor</h3>
+  <p class="note">Ask any conceptual questions, syntax queries, or exam-focused doubts from ${u.n}.</p>
+  <div class="chat-container">
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="chat-msg bot">Greetings! I am your <b>AI Tutor</b> for <b>${u.n} (${u.t})</b>. Ask me anything or select a topic chip below to start!</div>
+    </div>
+    <div class="chat-chips" id="chatChips">
+      ${u.notes.map((n,k)=>`<button class="chat-chip" onclick="askChip(${k})">${n[0]}</button>`).join("")}
+    </div>
+    <div class="chat-bar">
+      <input type="text" id="chatIn" class="chat-in" placeholder="Ask a question about ${u.n}..." onkeydown="if(event.key==='Enter')askTutor(this.value)">
+      <button class="btn" onclick="askTutor($('chatIn').value)">Ask</button>
+    </div>
+  </div>
+ </section>
+ <section><h3>⚡ g++ Compiler Studio</h3><div class="row"><select id="sel" onchange="load(this.value)">${u.ex.map((x,k)=>`<option value="${k}">${x[0]}</option>`).join("")}</select>
+ <button class="btn" onclick="go()">Compile and run</button><button class="btn g" onclick="load($('sel').value)">Reset</button></div>
+ <textarea id="src" spellcheck="false"></textarea><pre id="out">Press "Compile and run".</pre>
+ <p class="note">Browser simulation: verifies g++ syntax, scope declarations, unbalanced braces, and header inclusions while executing core statements.</p></section>
+ <section><h3>📝 Unit Evaluation (10 MCQs)</h3>${u.quiz.map((q,a)=>`<div class="q"><b>${q[0]}</b>${q[1].map((o,b)=>`<button onclick="ans(this,${q[2]==b})">${String.fromCharCode(65+b)}) ${o}</button>`).join("")}</div>`).join("")}</section>
+ <button class="btn" onclick="fin()">${done.includes(i)?"Completed ✓":"Mark unit complete"}</button>`;
+ load(0);prog();window.scrollTo(0,0)}
+function load(k){$("src").value=U[cur].ex[k][1]}
+function go(){const[r,bad]=sim($("src").value,U[cur].ex.map(x=>x));$("out").innerHTML="";$("out").textContent=r;$("out").className=bad?"err":""}
+function ans(b,ok){[...b.parentNode.querySelectorAll("button")].forEach(x=>x.className="");b.className=ok?"r":"w"}
+function fin(){if(!done.includes(cur))done.push(cur);save();show(cur)}
+show(0);
+</script>
+</body>
+</html>
